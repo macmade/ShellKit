@@ -39,6 +39,10 @@ int main( void )
          **********************************************************************/
         {
             SKTask * task;
+            
+            task = [ SKTask taskWithShellScript: @"true" ];
+            
+            [ task run ];
         }
     }
     
