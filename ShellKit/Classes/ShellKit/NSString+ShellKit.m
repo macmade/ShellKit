@@ -45,19 +45,20 @@
 {
     switch( status )
     {
-        case SKStatusSuccess:  return @"✅";
-        case SKStatusFatal:    return @"💣";
-        case SKStatusError:    return @"⛔️";
-        case SKStatusWarning:  return @"⚠️";
-        case SKStatusInfo:     return @"ℹ️";
-        case SKStatusDebug:    return @"🚸";
-        case SKStatusBuild:    return @"🔧";
-        case SKStatusInstall:  return @"📦";
-        case SKStatusIdea:     return @"💡";
-        case SKStatusSettings: return @"⚙️";
-        case SKStatusSecurity: return @"🔑";
-        case SKStatusExecute:  return @"🚦";
-        case SKStatusSearch:   return @"🔍";
+        case SKStatusNone:      return @"";
+        case SKStatusSuccess:   return @"✅";
+        case SKStatusFatal:     return @"💣";
+        case SKStatusError:     return @"⛔️";
+        case SKStatusWarning:   return @"⚠️";
+        case SKStatusInfo:      return @"ℹ️";
+        case SKStatusDebug:     return @"🚸";
+        case SKStatusBuild:     return @"🔧";
+        case SKStatusInstall:   return @"📦";
+        case SKStatusIdea:      return @"💡";
+        case SKStatusSettings:  return @"⚙️";
+        case SKStatusSecurity:  return @"🔑";
+        case SKStatusExecute:   return @"🚦";
+        case SKStatusSearch:    return @"🔍";
     }
     
     return @"";

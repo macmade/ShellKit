@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM( NSInteger, SKStatus )
 {
+    SKStatusNone,
     SKStatusSuccess,
     SKStatusFatal,
     SKStatusError,
