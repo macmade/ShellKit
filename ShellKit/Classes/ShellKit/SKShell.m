@@ -70,4 +70,72 @@ NS_ASSUME_NONNULL_END
     return YES;
 }
 
+- ( void )printError: ( nullable NSError * )error
+{
+    NSString * message;
+    
+    if( error.localizedDescription.length )
+    {
+        message = [ NSString stringWithFormat: @"Error - %@", error.localizedDescription ];
+    }
+    else
+    {
+        message = @"An unknown error occured";
+    }
+    
+    [ self printMessage: message status: SKStatusError color: SKColorRed ];
+}
+
+- ( void )printErrorMessage: ( NSString * )message
+{
+    NSError * error;
+    
+    error = [ NSError errorWithDomain: NSPOSIXErrorDomain code: 0 userInfo: @{ NSLocalizedDescriptionKey : message } ];
+    
+    [ self printError: error ];
+}
+
+- ( void )printMessage: ( NSString * )message
+{
+    [ self printMessage: message status: SKStatusNone color: SKColorNone ];
+}
+
+- ( void )printMessage: ( NSString * )message status: ( SKStatus )status
+{
+    [ self printMessage: message status: status color: SKColorNone ];
+}
+
+- ( void )printMessage: ( NSString * )message color: ( SKColor )color
+{
+    [ self printMessage: message status: SKStatusNone color: color ];
+}
+
+- ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color
+{
+    NSString * s;
+    NSString * p;
+    
+    s = [ NSString stringForShellStatus: status ];
+    p = self.prompt;
+    
+    if( s.length > 0 )
+    {
+        s = [ s stringByAppendingString: @"  " ];
+    }
+    
+    if( p.length > 0 )
+    {
+        p = [ s stringByAppendingString: @" " ];
+    }
+    
+    fprintf
+    (
+        stdout,
+        "%s%s%s\n",
+        p.UTF8String,
+        s.UTF8String,
+        [ message stringWithShellColor: color ].UTF8String
+    );
+}
+
 @end

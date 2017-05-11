@@ -28,14 +28,23 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <ShellKit/SKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SKShell: NSObject
 
-@property( atomic, readonly ) BOOL supportsColor;
+@property( atomic, readonly                    ) BOOL       supportsColor;
+@property( atomic, readwrite, strong, nullable ) NSString * prompt;
 
 + ( instancetype )currentShell;
+
+- ( void )printError: ( nullable NSError * )error;
+- ( void )printErrorMessage: ( NSString * )message;
+- ( void )printMessage: ( NSString * )message;
+- ( void )printMessage: ( NSString * )message status: ( SKStatus )status;
+- ( void )printMessage: ( NSString * )message color: ( SKColor )color;
+- ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color;
 
 @end
 
