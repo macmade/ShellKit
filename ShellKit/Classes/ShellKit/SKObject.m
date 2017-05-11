@@ -39,4 +39,18 @@ NS_ASSUME_NONNULL_END
 
 @implementation SKObject
 
+- ( NSError * )errorWithDescription: ( NSString * )format, ...
+{
+    NSString * description;
+    va_list    ap;
+    
+    va_start( ap, format );
+    
+    description = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+    
+    va_end( ap );
+    
+    return [ NSError errorWithDomain: [ NSString stringWithFormat: @"com.xs-labs.ShellKit.%@", NSStringFromClass( [ self class ] ) ] code: 0 userInfo: @{ NSLocalizedDescriptionKey : description } ];
+}
+
 @end

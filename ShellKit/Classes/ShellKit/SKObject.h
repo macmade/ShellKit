@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKObject: NSObject
 
+- ( NSError * )errorWithDescription: ( NSString * )format, ...;
+
 @end
 
 NS_ASSUME_NONNULL_END
