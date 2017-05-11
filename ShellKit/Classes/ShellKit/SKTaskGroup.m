@@ -33,8 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKTaskGroup()
 
-@property( atomic, readwrite, assign           ) BOOL      running;
-@property( atomic, readwrite, strong, nullable ) NSError * error;
+@property( atomic, readwrite, assign           ) BOOL                  running;
+@property( atomic, readwrite, strong, nullable ) NSError             * error;
+@property( atomic, readwrite, strong           ) NSString            * name;
+@property( atomic, readwrite, strong           ) NSArray< SKTask * > * tasks;
+@property( atomic, readwrite, strong, nullable ) SKTask              * currentTask;
 
 @end
 
@@ -42,11 +45,98 @@ NS_ASSUME_NONNULL_END
 
 @implementation SKTaskGroup
 
++ ( instancetype )taskGroupWithName: ( NSString * )name tasks: ( NSArray< SKTask * > * )tasks
+{
+    return [ [ self alloc ] initWithName: name tasks: tasks ];
+}
+
+- ( instancetype )init
+{
+    return [ self initWithName: @"" tasks: @[] ];
+}
+
+- ( instancetype )initWithName: ( NSString * )name tasks: ( NSArray< SKTask * > * )tasks
+{
+    if( ( self = [ super init ] ) )
+    {
+        self.name  = name;
+        self.tasks = tasks;
+    }
+    
+    return self;
+}
+
 #pragma mark - SKRunableObject
 
 - ( BOOL )run
 {
-    return NO;
+    SKTask * task;
+    
+    self.running = YES;
+    
+    if( self.name.length )
+    {
+        [ [ SKShell currentShell ] addPromptPart: self.name ];
+    }
+    
+    if( self.tasks.count == 0 )
+    {
+        self.error = [ self errorWithDescription: @"No task defined" ];
+        
+        [ [ SKShell currentShell ] printError: self.error ];
+        
+        self.running = NO;
+        
+        if( self.name.length )
+        {
+            [ [ SKShell currentShell ] removeLastPromptPart ];
+        }
+        
+        return NO;
+    }
+    
+    if( self.tasks.count > 1 )
+    {
+        [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu tasks" status: SKStatusExecute color: SKColorNone, self.tasks.count ];
+    }
+    
+    for( task in self.tasks )
+    {
+        self.currentTask = task;
+        
+        if( [ task run ] == NO )
+        {
+            self.currentTask = nil;
+            self.error       = task.error;
+            
+            [ [ SKShell currentShell ] printErrorMessage: @"Failed to execute task group" ];
+            
+            self.running = NO;
+            
+            if( self.name.length )
+            {
+                [ [ SKShell currentShell ] removeLastPromptPart ];
+            }
+            
+            return NO;
+        }
+    }
+    
+    self.currentTask = nil;
+    
+    if( self.tasks.count > 1 )
+    {
+        [ [ SKShell currentShell ] printMessageWithFormat: @"%lu tasks completed successfully" status: SKStatusSuccess color: SKColorGreen, self.tasks.count ];
+    }
+    
+    self.running = NO;
+    
+    if( self.name.length )
+    {
+        [ [ SKShell currentShell ] removeLastPromptPart ];
+    }
+    
+    return YES;
 }
 
 @end

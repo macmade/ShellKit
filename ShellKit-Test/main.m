@@ -106,6 +106,20 @@ int main( void )
             
             [ task run ];
         }
+        
+        PrintStep( "Task group" );
+        
+        {
+            SKTask      * t1;
+            SKTask      * t2;
+            SKTaskGroup * group;
+            
+            t1    = [ SKTask taskWithShellScript: @"true" ];
+            t2    = [ SKTask taskWithShellScript: @"true" ];
+            group = [ SKTaskGroup taskGroupWithName: @"test" tasks: @[ t1, t2 ] ];
+            
+            [ group run ];
+        }
     }
     
     return EXIT_SUCCESS;
