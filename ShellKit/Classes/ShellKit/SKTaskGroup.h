@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKTaskGroup: SKObject < SKRunableObject >
 
+@property( atomic, readwrite, strong, nullable ) NSDictionary< NSString *, NSString * > * variables;
+
 @end
 
 NS_ASSUME_NONNULL_END
