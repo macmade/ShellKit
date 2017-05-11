@@ -70,8 +70,9 @@ NS_ASSUME_NONNULL_END
 
 - ( BOOL )run
 {
-    SKTask * task;
-    
+    SKTask   * task;
+    NSUInteger i;
+        
     self.running = YES;
     
     if( self.name.length )
@@ -100,12 +101,18 @@ NS_ASSUME_NONNULL_END
         [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu tasks" status: SKStatusExecute color: SKColorNone, self.tasks.count ];
     }
     
+    i = 0;
+    
     for( task in self.tasks )
     {
         self.currentTask = task;
         
+        [ [ SKShell currentShell ] addPromptPart: [ NSString stringWithFormat: @"#%li", ( unsigned long )++i ] ];
+        
         if( [ task run ] == NO )
         {
+            [ [ SKShell currentShell ] removeLastPromptPart ];
+            
             self.currentTask = nil;
             self.error       = task.error;
             
@@ -120,6 +127,8 @@ NS_ASSUME_NONNULL_END
             
             return NO;
         }
+        
+        [ [ SKShell currentShell ] removeLastPromptPart ];
     }
     
     self.currentTask = nil;

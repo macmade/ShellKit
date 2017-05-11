@@ -55,7 +55,7 @@ int main( void )
 {
     @autoreleasepool
     {
-        [ SKShell currentShell ].promptParts = @[ @"ShellKit-Test" ];
+        [ SKShell currentShell ].promptParts = @[ @"ShellKit" ];
         
         PrintStep( "Simple task" );
         
