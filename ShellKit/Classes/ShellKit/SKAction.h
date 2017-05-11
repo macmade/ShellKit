@@ -31,11 +31,19 @@
 #import <ShellKit/SKObject.h>
 #import <ShellKit/SKRunableObject.h>
 
+@class SKTaskGroup;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SKAction: SKObject < SKRunableObject >
 
 @property( atomic, readwrite, strong, nullable ) NSDictionary< NSString *, NSString * > * variables;
+@property( atomic, readonly                    ) NSString                               * name;
+@property( atomic, readonly                    ) NSArray< SKTaskGroup * >               * taskGroups;
+@property( atomic, readonly, nullable          ) SKTaskGroup                            * currentTaskGroup;
+
++ ( instancetype )actionWithName: ( NSString * )name taskGroups: ( NSArray< SKTaskGroup * > * )groups;
+- ( instancetype )initWithName: ( NSString * )name taskGroups: ( NSArray< SKTaskGroup * > * )groups NS_DESIGNATED_INITIALIZER;
 
 @end
 
