@@ -72,51 +72,21 @@ NS_ASSUME_NONNULL_END
 {
     SKTask   * task;
     NSUInteger i;
-        
-    self.running = YES;
     
-    if( self.name.length )
+    @synchronized( self )
     {
-        [ [ SKShell currentShell ] addPromptPart: self.name ];
-    }
-    
-    if( self.tasks.count == 0 )
-    {
-        self.error = [ self errorWithDescription: @"No task defined" ];
-        
-        [ [ SKShell currentShell ] printError: self.error ];
-        
-        self.running = NO;
+        self.running = YES;
         
         if( self.name.length )
         {
-            [ [ SKShell currentShell ] removeLastPromptPart ];
+            [ [ SKShell currentShell ] addPromptPart: self.name ];
         }
         
-        return NO;
-    }
-    
-    if( self.tasks.count > 1 )
-    {
-        [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu tasks" status: SKStatusExecute color: SKColorNone, self.tasks.count ];
-    }
-    
-    i = 0;
-    
-    for( task in self.tasks )
-    {
-        self.currentTask = task;
-        
-        [ [ SKShell currentShell ] addPromptPart: [ NSString stringWithFormat: @"#%li", ( unsigned long )++i ] ];
-        
-        if( [ task run ] == NO )
+        if( self.tasks.count == 0 )
         {
-            [ [ SKShell currentShell ] removeLastPromptPart ];
+            self.error = [ self errorWithDescription: @"No task defined" ];
             
-            self.currentTask = nil;
-            self.error       = task.error;
-            
-            [ [ SKShell currentShell ] printErrorMessage: @"Failed to execute task group" ];
+            [ [ SKShell currentShell ] printError: self.error ];
             
             self.running = NO;
             
@@ -128,24 +98,57 @@ NS_ASSUME_NONNULL_END
             return NO;
         }
         
-        [ [ SKShell currentShell ] removeLastPromptPart ];
+        if( self.tasks.count > 1 )
+        {
+            [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu tasks" status: SKStatusExecute color: SKColorNone, self.tasks.count ];
+        }
+        
+        i = 0;
+        
+        for( task in self.tasks )
+        {
+            self.currentTask = task;
+            
+            [ [ SKShell currentShell ] addPromptPart: [ NSString stringWithFormat: @"#%li", ( unsigned long )++i ] ];
+            
+            if( [ task run ] == NO )
+            {
+                [ [ SKShell currentShell ] removeLastPromptPart ];
+                
+                self.currentTask = nil;
+                self.error       = task.error;
+                
+                [ [ SKShell currentShell ] printErrorMessage: @"Failed to execute task group" ];
+                
+                self.running = NO;
+                
+                if( self.name.length )
+                {
+                    [ [ SKShell currentShell ] removeLastPromptPart ];
+                }
+                
+                return NO;
+            }
+            
+            [ [ SKShell currentShell ] removeLastPromptPart ];
+        }
+        
+        self.currentTask = nil;
+        
+        if( self.tasks.count > 1 )
+        {
+            [ [ SKShell currentShell ] printMessageWithFormat: @"%lu tasks completed successfully" status: SKStatusSuccess color: SKColorGreen, self.tasks.count ];
+        }
+        
+        self.running = NO;
+        
+        if( self.name.length )
+        {
+            [ [ SKShell currentShell ] removeLastPromptPart ];
+        }
+        
+        return YES;
     }
-    
-    self.currentTask = nil;
-    
-    if( self.tasks.count > 1 )
-    {
-        [ [ SKShell currentShell ] printMessageWithFormat: @"%lu tasks completed successfully" status: SKStatusSuccess color: SKColorGreen, self.tasks.count ];
-    }
-    
-    self.running = NO;
-    
-    if( self.name.length )
-    {
-        [ [ SKShell currentShell ] removeLastPromptPart ];
-    }
-    
-    return YES;
 }
 
 @end

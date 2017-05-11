@@ -72,51 +72,21 @@ NS_ASSUME_NONNULL_END
 {
     SKTaskGroup * group;
     NSUInteger    i;
-        
-    self.running = YES;
     
-    if( self.name.length )
+    @synchronized( self )
     {
-        [ [ SKShell currentShell ] addPromptPart: self.name ];
-    }
-    
-    if( self.taskGroups.count == 0 )
-    {
-        self.error = [ self errorWithDescription: @"No task group defined" ];
-        
-        [ [ SKShell currentShell ] printError: self.error ];
-        
-        self.running = NO;
+        self.running = YES;
         
         if( self.name.length )
         {
-            [ [ SKShell currentShell ] removeLastPromptPart ];
+            [ [ SKShell currentShell ] addPromptPart: self.name ];
         }
         
-        return NO;
-    }
-    
-    if( self.taskGroups.count > 1 )
-    {
-        [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu task groups" status: SKStatusExecute color: SKColorNone, self.taskGroups.count ];
-    }
-    
-    i = 0;
-    
-    for( group in self.taskGroups )
-    {
-        self.currentTaskGroup = group;
-        
-        [ [ SKShell currentShell ] addPromptPart: [ NSString stringWithFormat: @"#%li", ( unsigned long )++i ] ];
-        
-        if( [ group run ] == NO )
+        if( self.taskGroups.count == 0 )
         {
-            [ [ SKShell currentShell ] removeLastPromptPart ];
+            self.error = [ self errorWithDescription: @"No task group defined" ];
             
-            self.currentTaskGroup = nil;
-            self.error           = group.error;
-            
-            [ [ SKShell currentShell ] printErrorMessage: @"Failed to execute action" ];
+            [ [ SKShell currentShell ] printError: self.error ];
             
             self.running = NO;
             
@@ -128,24 +98,57 @@ NS_ASSUME_NONNULL_END
             return NO;
         }
         
-        [ [ SKShell currentShell ] removeLastPromptPart ];
+        if( self.taskGroups.count > 1 )
+        {
+            [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu task groups" status: SKStatusExecute color: SKColorNone, self.taskGroups.count ];
+        }
+        
+        i = 0;
+        
+        for( group in self.taskGroups )
+        {
+            self.currentTaskGroup = group;
+            
+            [ [ SKShell currentShell ] addPromptPart: [ NSString stringWithFormat: @"#%li", ( unsigned long )++i ] ];
+            
+            if( [ group run ] == NO )
+            {
+                [ [ SKShell currentShell ] removeLastPromptPart ];
+                
+                self.currentTaskGroup = nil;
+                self.error           = group.error;
+                
+                [ [ SKShell currentShell ] printErrorMessage: @"Failed to execute action" ];
+                
+                self.running = NO;
+                
+                if( self.name.length )
+                {
+                    [ [ SKShell currentShell ] removeLastPromptPart ];
+                }
+                
+                return NO;
+            }
+            
+            [ [ SKShell currentShell ] removeLastPromptPart ];
+        }
+        
+        self.currentTaskGroup = nil;
+        
+        if( self.taskGroups.count > 1 )
+        {
+            [ [ SKShell currentShell ] printMessageWithFormat: @"%lu task groups completed successfully" status: SKStatusSuccess color: SKColorGreen, self.taskGroups.count ];
+        }
+        
+        self.running = NO;
+        
+        if( self.name.length )
+        {
+            [ [ SKShell currentShell ] removeLastPromptPart ];
+        }
+        
+        return YES;
     }
-    
-    self.currentTaskGroup = nil;
-    
-    if( self.taskGroups.count > 1 )
-    {
-        [ [ SKShell currentShell ] printMessageWithFormat: @"%lu task groups completed successfully" status: SKStatusSuccess color: SKColorGreen, self.taskGroups.count ];
-    }
-    
-    self.running = NO;
-    
-    if( self.name.length )
-    {
-        [ [ SKShell currentShell ] removeLastPromptPart ];
-    }
-    
-    return YES;
 }
 
 @end

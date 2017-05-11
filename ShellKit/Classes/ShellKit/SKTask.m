@@ -91,76 +91,79 @@ NS_ASSUME_NONNULL_END
 {
     NSTask * task;
     
-    if( self.script.length == 0 )
+    @synchronized( self )
     {
-        self.error = [ self errorWithDescription: @"No script defined" ];
-        
-        return NO;
-    }
-    
-    self.running = YES;
-    
-    [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ self.script stringWithShellColor: SKColorCyan ] ];
-    
-    task            = [ NSTask new ];
-    task.launchPath = @"/bin/sh";
-    task.arguments  =
-    @[
-        @"-l",
-        @"-c",
-        self.script
-    ];
-    
-    [ task launch ];
-    [ task waitUntilExit ];
-    
-    if( task.terminationStatus != 0 )
-    {
-        if( self.recover.count )
+        if( self.script.length == 0 )
         {
-            {
-                SKTask * recover;
-                BOOL     ret;
-                
-                for( recover in self.recover )
-                {
-                    [ [ SKShell currentShell ] printMessageWithFormat: @"Task failed - Trying to recover..." status: SKStatusWarning color: SKColorYellow ];
-                    
-                    ret          = [ recover run ];
-                    self.error   = recover.error;
-                    
-                    if( ret )
-                    {
-                        [ [ SKShell currentShell ] printMessage: @"Task recovered successfully" status: SKStatusSuccess color: SKColorGreen ];
-                        
-                        self.running = NO;
-                        
-                        return YES;
-                    }
-                }
-                
-                [ [ SKShell currentShell ] printErrorMessage: @"Task failed to recover" ];
-                
-                self.running = NO;
-                
-                return NO;
-            }
+            self.error = [ self errorWithDescription: @"No script defined" ];
+            
+            return NO;
         }
         
-        self.error = [ self errorWithDescription: @"Task exited with status %li", ( long )( task.terminationStatus ) ];
+        self.running = YES;
         
-        [ [ SKShell currentShell ] printError: self.error ];
+        [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ self.script stringWithShellColor: SKColorCyan ] ];
+        
+        task            = [ NSTask new ];
+        task.launchPath = @"/bin/sh";
+        task.arguments  =
+        @[
+            @"-l",
+            @"-c",
+            self.script
+        ];
+        
+        [ task launch ];
+        [ task waitUntilExit ];
+        
+        if( task.terminationStatus != 0 )
+        {
+            if( self.recover.count )
+            {
+                {
+                    SKTask * recover;
+                    BOOL     ret;
+                    
+                    for( recover in self.recover )
+                    {
+                        [ [ SKShell currentShell ] printMessageWithFormat: @"Task failed - Trying to recover..." status: SKStatusWarning color: SKColorYellow ];
+                        
+                        ret          = [ recover run ];
+                        self.error   = recover.error;
+                        
+                        if( ret )
+                        {
+                            [ [ SKShell currentShell ] printMessage: @"Task recovered successfully" status: SKStatusSuccess color: SKColorGreen ];
+                            
+                            self.running = NO;
+                            
+                            return YES;
+                        }
+                    }
+                    
+                    [ [ SKShell currentShell ] printErrorMessage: @"Task failed to recover" ];
+                    
+                    self.running = NO;
+                    
+                    return NO;
+                }
+            }
+            
+            self.error = [ self errorWithDescription: @"Task exited with status %li", ( long )( task.terminationStatus ) ];
+            
+            [ [ SKShell currentShell ] printError: self.error ];
+            
+            self.running = NO;
+            
+            return NO;
+        }
+        
+        [ [ SKShell currentShell ] printMessage: @"Task completed successfully" status: SKStatusSuccess color: SKColorGreen ];
         
         self.running = NO;
         
-        return NO;
+        return YES;
     }
-    
-    [ [ SKShell currentShell ] printMessage: @"Task completed successfully" status: SKStatusSuccess color: SKColorGreen ];
-    
-    self.running = NO;
-    
-    return YES;
 }
 
 @end
