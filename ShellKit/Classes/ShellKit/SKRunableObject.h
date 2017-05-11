@@ -35,8 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 
-@property( atomic, readonly, nullable ) NSError * error;
 @property( atomic, readonly           ) BOOL      running;
+@property( atomic, readonly, nullable ) NSError * error;
 
 - ( BOOL )run;
 

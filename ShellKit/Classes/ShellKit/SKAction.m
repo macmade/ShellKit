@@ -33,8 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKAction()
 
-@property( atomic, readwrite, strong, nullable ) NSError * error;
 @property( atomic, readwrite, assign           ) BOOL      running;
+@property( atomic, readwrite, strong, nullable ) NSError * error;
 
 @end
 
