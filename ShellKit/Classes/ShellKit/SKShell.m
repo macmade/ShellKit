@@ -86,10 +86,14 @@ NS_ASSUME_NONNULL_END
     if( observe && self.observingPrompt == NO )
     {
         [ self addObserver: self forKeyPath: NSStringFromSelector( @selector( prompt ) ) options: NSKeyValueObservingOptionNew context: NULL ];
+        
+        self.observingPrompt = YES;
     }
     else if( observe == NO && self.observingPrompt )
     {
         [ self removeObserver: self forKeyPath: NSStringFromSelector( @selector( prompt ) ) ];
+        
+        self.observingPrompt = NO;
     }
 }
 

@@ -116,7 +116,7 @@ int main( void )
             
             t1    = [ SKTask taskWithShellScript: @"true" ];
             t2    = [ SKTask taskWithShellScript: @"true" ];
-            group = [ SKTaskGroup taskGroupWithName: @"test" tasks: @[ t1, t2 ] ];
+            group = [ SKTaskGroup taskGroupWithName: @"test-group" tasks: @[ t1, t2 ] ];
             
             [ group run ];
         }
