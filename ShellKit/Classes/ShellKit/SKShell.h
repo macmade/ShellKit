@@ -42,10 +42,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 - ( void )printError: ( nullable NSError * )error;
 - ( void )printErrorMessage: ( NSString * )message;
+- ( void )printErrorMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+
 - ( void )printMessage: ( NSString * )message;
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status;
 - ( void )printMessage: ( NSString * )message color: ( SKColor )color;
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color;
+
+- ( void )printMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printMessageWithFormat: ( NSString * )format status: ( SKStatus )status, ... NS_FORMAT_FUNCTION( 1, 3 );
+- ( void )printMessageWithFormat: ( NSString * )format color: ( SKColor )color, ... NS_FORMAT_FUNCTION( 1, 3 );
+- ( void )printMessageWithFormat: ( NSString * )format status: ( SKStatus )status color: ( SKColor )color, ... NS_FORMAT_FUNCTION( 1, 4 );
+
 - ( void )addPromptPart:( NSString * )part;
 - ( void )removeLastPromptPart;
 
