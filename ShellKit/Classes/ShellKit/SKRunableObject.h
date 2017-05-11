@@ -33,6 +33,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SKRunableObject< NSObject >
 
+@required
+
+@property( atomic, readonly, nullable ) NSError * error;
+@property( atomic, readonly           ) BOOL      running;
+
+- ( BOOL )run;
+
 @end
 
 NS_ASSUME_NONNULL_END

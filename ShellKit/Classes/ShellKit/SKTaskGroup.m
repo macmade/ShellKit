@@ -33,10 +33,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKTaskGroup()
 
+@property( atomic, readwrite, strong, nullable ) NSError * error;
+@property( atomic, readwrite, assign           ) BOOL      running;
+
 @end
 
 NS_ASSUME_NONNULL_END
 
 @implementation SKTaskGroup
+
+#pragma mark - SKRunableObject
+
+- ( BOOL )run
+{
+    return NO;
+}
 
 @end
