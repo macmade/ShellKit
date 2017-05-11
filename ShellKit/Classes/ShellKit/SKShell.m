@@ -27,7 +27,9 @@
  * @copyright   (c) 2017, Jean-David Gadina - www.xs-labs.com
  */
 
-#import "SKShell.h"
+#import <ShellKit/ShellKit.h>
+#import <curses.h>
+#import <term.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,5 +40,34 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 @implementation SKShell
+
++ ( instancetype )currentShell
+{
+    static dispatch_once_t once;
+    static id              instance;
+    
+    dispatch_once
+    (
+        &once,
+        ^( void )
+        {
+            instance = [ self new ];
+        }
+    );
+    
+    return instance;
+}
+
+- ( BOOL )supportsColor
+{
+    int err;
+    
+    if( setupterm( NULL, 1, &err ) == ERR )
+    {
+        return NO;
+    }
+    
+    return YES;
+}
 
 @end

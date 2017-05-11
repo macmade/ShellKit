@@ -33,6 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKShell: NSObject
 
+@property( atomic, readonly ) BOOL supportsColor;
+
++ ( instancetype )currentShell;
+
 @end
 
 NS_ASSUME_NONNULL_END
