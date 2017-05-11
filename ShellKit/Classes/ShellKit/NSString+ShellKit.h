@@ -28,10 +28,15 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <ShellKit/SKTypes.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString( ShellKit )
+
++ ( NSString * )stringForShellStatus: ( SKStatus )status;
++ ( NSString * )stringForShellColor: ( SKColor )color;
+- ( NSString * )stringWithShellColor: ( SKColor )color;
 
 @end
 
