@@ -30,26 +30,45 @@
 #import <Foundation/Foundation.h>
 #import <ShellKit/ShellKit.h>
 
+void PrintStep( const char * msg );
+void PrintStep( const char * msg )
+{
+    static NSUInteger step = 0;
+    
+    if( step > 0 )
+    {
+        printf( "\n" );
+    }
+    
+    printf
+    (
+        "--------------------------------------------------------------------------------\n"
+        "> Example %lu: %s\n"
+        "--------------------------------------------------------------------------------\n"
+        "\n",
+        ( unsigned long )( ++step ),
+        msg
+    );
+}
+
 int main( void )
 {
     @autoreleasepool
     {
         [ SKShell currentShell ].promptParts = @[ @"ShellKit-Test" ];
         
-        /***********************************************************************
-         * Simple task
-         **********************************************************************/
+        PrintStep( "Simple task" );
+        
         {
             SKTask * task;
             
-            task = [ SKTask taskWithShellScript: @"true" ];
+            task = [ SKTask taskWithShellScript: @"ls -al" ];
             
             [ task run ];
         }
         
-        /***********************************************************************
-         * Simple task failure
-         **********************************************************************/
+        PrintStep( "Simple task failure" );
+        
         {
             SKTask * task;
             
@@ -58,13 +77,32 @@ int main( void )
             [ task run ];
         }
         
-        /***********************************************************************
-         * Simple task failure with recovery
-         **********************************************************************/
+        PrintStep( "Simple task failure with failed recovery" );
+        
         {
             SKTask * task;
             
-            task = [ SKTask taskWithShellScript: @"false" recoverTask: [ SKTask taskWithShellScript: @"true" ] ];
+            task = [ SKTask taskWithShellScript: @"false" recoverTask: [ SKTask taskWithShellScript: @"false" ] ];
+            
+            [ task run ];
+        }
+        
+        PrintStep( "Simple task failure with successful recovery (variant 1)" );
+        
+        {
+            SKTask * task;
+            
+            task = [ SKTask taskWithShellScript: @"false" recoverTasks: @[ [ SKTask taskWithShellScript: @"false" ], [ SKTask taskWithShellScript: @"true" ] ] ];
+            
+            [ task run ];
+        }
+        
+        PrintStep( "Simple task failure with successful recovery (variant 2)" );
+        
+        {
+            SKTask * task;
+            
+            task = [ SKTask taskWithShellScript: @"false" recoverTask: [ SKTask taskWithShellScript: @"false" recoverTask: [ SKTask taskWithShellScript: @"true" ] ] ];
             
             [ task run ];
         }

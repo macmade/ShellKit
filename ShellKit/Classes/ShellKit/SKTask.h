@@ -39,9 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + ( instancetype )taskWithShellScript: ( NSString * )script;
 + ( instancetype )taskWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover;
++ ( instancetype )taskWithShellScript: ( NSString * )script recoverTasks: ( nullable NSArray< SKTask * > * )recover;
 
 - ( instancetype )initWithShellScript: ( NSString * )script;
-- ( instancetype )initWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover NS_DESIGNATED_INITIALIZER;
+- ( instancetype )initWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover;
+- ( instancetype )initWithShellScript: ( NSString * )script recoverTasks: ( nullable NSArray< SKTask * > * )recover NS_DESIGNATED_INITIALIZER;
 
 @end
 

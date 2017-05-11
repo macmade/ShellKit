@@ -33,10 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKTask()
 
-@property( atomic, readwrite, assign           ) BOOL       running;
-@property( atomic, readwrite, strong, nullable ) NSError  * error;
-@property( atomic, readwrite, strong           ) NSString * script;
-@property( atomic, readwrite, strong, nullable ) SKTask   * recover;
+@property( atomic, readwrite, assign           ) BOOL                  running;
+@property( atomic, readwrite, strong, nullable ) NSError             * error;
+@property( atomic, readwrite, strong           ) NSString            * script;
+@property( atomic, readwrite, strong, nullable ) NSArray< SKTask * > * recover;
 
 @end
 
@@ -54,6 +54,11 @@ NS_ASSUME_NONNULL_END
     return [ [ self alloc ] initWithShellScript: script recoverTask: recover ];
 }
 
++ ( instancetype )taskWithShellScript: ( NSString * )script recoverTasks: ( nullable NSArray< SKTask * > * )recover
+{
+    return [ [ self alloc ] initWithShellScript: script recoverTasks: recover ];
+}
+
 - ( instancetype )init
 {
     return [ self initWithShellScript: @"" ];
@@ -65,6 +70,11 @@ NS_ASSUME_NONNULL_END
 }
 
 - ( instancetype )initWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover
+{
+    return [ self initWithShellScript: script recoverTasks: ( recover ) ? @[ recover ] : nil ];
+}
+
+- ( instancetype )initWithShellScript: ( NSString * )script recoverTasks: ( nullable NSArray< SKTask * > * )recover
 {
     if( ( self = [ super init ] ) )
     {
@@ -88,6 +98,8 @@ NS_ASSUME_NONNULL_END
         return NO;
     }
     
+    self.running = YES;
+    
     [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ self.script stringWithShellColor: SKColorCyan ] ];
     
     task            = [ NSTask new ];
@@ -104,17 +116,34 @@ NS_ASSUME_NONNULL_END
     
     if( task.terminationStatus != 0 )
     {
-        if( self.recover )
+        if( self.recover.count )
         {
-            [ [ SKShell currentShell ] printMessageWithFormat: @"Task failed with status %li - Trying to recover..." status: SKStatusWarning color: SKColorYellow, ( long )( task.terminationStatus ) ];
-            
             {
-                BOOL ret;
+                SKTask * recover;
+                BOOL     ret;
                 
-                ret        = [ self.recover run ];
-                self.error = self.recover.error;
+                for( recover in self.recover )
+                {
+                    [ [ SKShell currentShell ] printMessageWithFormat: @"Task failed - Trying to recover..." status: SKStatusWarning color: SKColorYellow ];
+                    
+                    ret          = [ recover run ];
+                    self.error   = recover.error;
+                    
+                    if( ret )
+                    {
+                        [ [ SKShell currentShell ] printMessage: @"Task recovered successfully" status: SKStatusSuccess color: SKColorGreen ];
+                        
+                        self.running = NO;
+                        
+                        return YES;
+                    }
+                }
                 
-                return ret;
+                [ [ SKShell currentShell ] printErrorMessage: @"Task failed to recover" ];
+                
+                self.running = NO;
+                
+                return NO;
             }
         }
         
@@ -122,10 +151,14 @@ NS_ASSUME_NONNULL_END
         
         [ [ SKShell currentShell ] printError: self.error ];
         
+        self.running = NO;
+        
         return NO;
     }
     
     [ [ SKShell currentShell ] printMessage: @"Task completed successfully" status: SKStatusSuccess color: SKColorGreen ];
+    
+    self.running = NO;
     
     return YES;
 }
