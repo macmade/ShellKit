@@ -1,0 +1,6 @@
+language: objective-c
+script:
+- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit" build
+- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Static" build
+notifications:
+    slack: xs-labs:FXh1yLXNkpcVxKZhZU6icdhI
