@@ -162,10 +162,12 @@ NS_ASSUME_NONNULL_END
 
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color
 {
+    NSString * p;
     NSString * s;
     
     @synchronized( self )
     {
+        p = ( self.prompt ) ? self.prompt : @"";
         s = [ NSString stringForShellStatus: status ];
         
         if( s.length > 0 )
@@ -177,7 +179,7 @@ NS_ASSUME_NONNULL_END
         (
             stdout,
             "%s%s%s\n",
-            self.prompt.UTF8String,
+            p.UTF8String,
             s.UTF8String,
             [ message stringWithShellColor: color ].UTF8String
         );
