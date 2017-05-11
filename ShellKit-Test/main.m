@@ -120,6 +120,92 @@ int main( void )
             
             [ group run ];
         }
+        
+        PrintStep( "Task group failure" );
+        
+        {
+            SKTask      * t1;
+            SKTask      * t2;
+            SKTaskGroup * group;
+            
+            t1    = [ SKTask taskWithShellScript: @"true" ];
+            t2    = [ SKTask taskWithShellScript: @"false" ];
+            group = [ SKTaskGroup taskGroupWithName: @"task-group" tasks: @[ t1, t2 ] ];
+            
+            [ group run ];
+        }
+        
+        PrintStep( "Task group failure with successful recovery" );
+        
+        {
+            SKTask      * t1;
+            SKTask      * t2;
+            SKTaskGroup * group;
+            
+            t1    = [ SKTask taskWithShellScript: @"true" ];
+            t2    = [ SKTask taskWithShellScript: @"false" recoverTask: t1 ];
+            group = [ SKTaskGroup taskGroupWithName: @"task-group" tasks: @[ t1, t2 ] ];
+            
+            [ group run ];
+        }
+        
+        PrintStep( "Action" );
+        
+        {
+            SKTask      * t1;
+            SKTask      * t2;
+            SKTaskGroup * g1;
+            SKTaskGroup * g2;
+            SKAction    * action;
+            
+            t1     = [ SKTask taskWithShellScript: @"true" ];
+            t2     = [ SKTask taskWithShellScript: @"true" ];
+            g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
+            g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t2 ] ];
+            action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+            
+            [ action run ];
+        }
+        
+        PrintStep( "Action failure" );
+        
+        {
+            SKTask      * t1;
+            SKTask      * t2;
+            SKTask      * t3;
+            SKTaskGroup * g1;
+            SKTaskGroup * g2;
+            SKAction    * action;
+            
+            t1     = [ SKTask taskWithShellScript: @"true" ];
+            t2     = [ SKTask taskWithShellScript: @"true" ];
+            t3     = [ SKTask taskWithShellScript: @"false" ];
+            g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
+            g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t3 ] ];
+            action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+            
+            [ action run ];
+        }
+        
+        PrintStep( "Action failure with successful recovery" );
+        
+        {
+            SKTask      * t1;
+            SKTask      * t2;
+            SKTask      * t3;
+            SKTaskGroup * g1;
+            SKTaskGroup * g2;
+            SKAction    * action;
+            
+            t1     = [ SKTask taskWithShellScript: @"true" ];
+            t2     = [ SKTask taskWithShellScript: @"true" ];
+            t3     = [ SKTask taskWithShellScript: @"false" recoverTask: t1 ];
+            g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
+            g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t3 ] ];
+            action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+            
+            [ action run ];
+        }
     }
     
     return EXIT_SUCCESS;

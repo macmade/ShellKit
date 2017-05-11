@@ -90,7 +90,39 @@ If a task fails, the whole group will also fail.
 Running actions
 ---------------
 
-...
+Actions, represented by the `SKAction` class, consist of a group of task groups (`SKTaskGroups`):
+
+    SKTask      * t1;
+    SKTask      * t2;
+    SKTaskGroup * g1;
+    SKTaskGroup * g2;
+    SKAction    * action;
+    
+    t1     = [ SKTask taskWithShellScript: @"true" ];
+    t2     = [ SKTask taskWithShellScript: @"true" ];
+    g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
+    g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t2 ] ];
+    action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+    
+    [ action run ];
+
+The action will try to run each task group.  
+If a task group fails, the whole action will also fail.
+
+    [ ShellKit ]> [ action ]> 🚦  Running 2 task groups
+    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> 🚦  Running 2 tasks
+    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #1 ]> 🚦  Running task: true
+    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #1 ]> ✅  Task completed successfully
+    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #2 ]> 🚦  Running task: true
+    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #2 ]> ✅  Task completed successfully
+    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> ✅  2 tasks completed successfully
+    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> 🚦  Running 2 tasks
+    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #1 ]> 🚦  Running task: true
+    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #1 ]> ✅  Task completed successfully
+    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #2 ]> 🚦  Running task: true
+    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #2 ]> ✅  Task completed successfully
+    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> ✅  2 tasks completed successfully
+    [ ShellKit ]> [ action ]> ✅  2 task groups completed successfully
 
 Arguments substitution
 ----------------------
