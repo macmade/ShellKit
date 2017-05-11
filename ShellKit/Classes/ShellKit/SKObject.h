@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKObject: NSObject
 
-- ( NSError * )errorWithDescription: ( NSString * )format, ...;
+- ( NSError * )errorWithDescription: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
 
 @end
 
