@@ -31,6 +31,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM( NSInteger, SKStatus )
+{
+    SKStatusSuccess,
+    SKStatusFatal,
+    SKStatusError,
+    SKStatusWarning,
+    SKStatusInfo,
+    SKStatusDebug,
+    SKStatusBuild,
+    SKStatusInstall,
+    SKStatusIdea,
+    SKStatusSettings,
+    SKStatusSecurity,
+    SKStatusExecute,
+    SKStatusSearch
+};
 
+typedef NS_ENUM( NSInteger, SKColor )
+{
+    SKColorNone,
+    SKColorBlack,
+    SKColorRed,
+    SKColorGreen,
+    SKColorYellow,
+    SKColorBlue,
+    SKColorPurple,
+    SKColorWhite,
+    SKColorCyan
+};
 
 NS_ASSUME_NONNULL_END

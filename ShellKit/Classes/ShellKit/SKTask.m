@@ -27,7 +27,7 @@
  * @copyright   (c) 2017, Jean-David Gadina - www.xs-labs.com
  */
 
-#import "SKTask.h"
+#import <ShellKit/ShellKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

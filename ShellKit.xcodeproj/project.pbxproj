@@ -27,6 +27,7 @@
 		054B00501EC4EA050032B500 /* NSString+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B004D1EC4EA050032B500 /* NSString+ShellKit.m */; };
 		054B00511EC4EA050032B500 /* NSString+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B004D1EC4EA050032B500 /* NSString+ShellKit.m */; };
 		054B00541EC4EA950032B500 /* SKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B00521EC4EA950032B500 /* SKTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B00561EC4ECA60032B500 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C35D8A1EC3D0F500F373E7 /* libcurses.tbd */; };
 		054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 054BFFF01EC4E60B0032B500 /* ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054B00561EC4ECA60032B500 /* libcurses.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
