@@ -33,7 +33,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SKTask: NSObject < SKRunableObject >
+@interface SKTask: SKObject < SKRunableObject >
 
 @end
 

@@ -33,7 +33,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SKAction: NSObject < SKRunableObject >
+@interface SKAction: SKObject < SKRunableObject >
 
 @end
 
