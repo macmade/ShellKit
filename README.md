@@ -19,6 +19,9 @@ Objective-C framework for running shell scripts.
 Code Examples
 -------------
 
+`ShellKit` provides a test executable.  
+For complete examples, please take a look at the [source code](https://github.com/macmade/ShellKit/blob/master/ShellKit-Test/main.m).
+
 ### Running shell script tasks
 
 A shell command can by run by using the `SKTask` object:
