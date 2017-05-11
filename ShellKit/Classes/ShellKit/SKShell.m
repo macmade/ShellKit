@@ -35,6 +35,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKShell()
 
+@property( atomic, readwrite, assign ) BOOL                    observingPrompt;
+@property( atomic, readwrite, assign ) BOOL                    hasPromptParts;
+@property( atomic, readwrite, strong ) NSArray< NSString * > * promptStrings;
+
+- ( void )observerPrompt: ( BOOL )observe;
+
 @end
 
 NS_ASSUME_NONNULL_END
@@ -56,6 +62,50 @@ NS_ASSUME_NONNULL_END
     );
     
     return instance;
+}
+
+- ( instancetype )init
+{
+    if( ( self = [ super init ] ) )
+    {
+        self.promptStrings = @[];
+        
+        [ self observerPrompt: YES ];
+    }
+    
+    return self;
+}
+
+- ( void )dealloc
+{
+    [ self observerPrompt: NO ];
+}
+
+- ( void )observerPrompt: ( BOOL )observe
+{
+    if( observe && self.observingPrompt == NO )
+    {
+        [ self addObserver: self forKeyPath: NSStringFromSelector( @selector( prompt ) ) options: NSKeyValueObservingOptionNew context: NULL ];
+    }
+    else if( observe == NO && self.observingPrompt )
+    {
+        [ self removeObserver: self forKeyPath: NSStringFromSelector( @selector( prompt ) ) ];
+    }
+}
+
+- ( void )observeValueForKeyPath: ( NSString * )keyPath ofObject: ( id )object change: ( NSDictionary< NSKeyValueChangeKey, id > * )change context: ( void * )context
+{
+    if( object == self && [ keyPath isEqualToString: NSStringFromSelector( @selector( prompt ) )  ] )
+    {
+        @synchronized( self )
+        {
+            self.promptStrings = @[];
+        }
+    }
+    else
+    {
+        [ super observeValueForKeyPath: keyPath ofObject: object change: change context: context ];
+    }
 }
 
 - ( BOOL )supportsColor
@@ -113,29 +163,88 @@ NS_ASSUME_NONNULL_END
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color
 {
     NSString * s;
-    NSString * p;
     
-    s = [ NSString stringForShellStatus: status ];
-    p = self.prompt;
-    
-    if( s.length > 0 )
+    @synchronized( self )
     {
-        s = [ s stringByAppendingString: @"  " ];
+        s = [ NSString stringForShellStatus: status ];
+        
+        if( s.length > 0 )
+        {
+            s = [ s stringByAppendingString: @"  " ];
+        }
+        
+        fprintf
+        (
+            stdout,
+            "%s%s%s\n",
+            self.prompt.UTF8String,
+            s.UTF8String,
+            [ message stringWithShellColor: color ].UTF8String
+        );
     }
-    
-    if( p.length > 0 )
+}
+
+- ( NSArray< NSString * > * )promptParts
+{
+    @synchronized( self )
     {
-        p = [ s stringByAppendingString: @" " ];
+        return self.promptStrings.copy;
     }
+}
+
+- ( void )setPromptParts: ( NSArray< NSString * > * )parts
+{
+    NSUInteger        i;
+    NSString        * part;
+    NSMutableString * prompt;
+    SKColor           colors[] = { SKColorCyan, SKColorBlue, SKColorPurple };
     
-    fprintf
-    (
-        stdout,
-        "%s%s%s\n",
-        p.UTF8String,
-        s.UTF8String,
-        [ message stringWithShellColor: color ].UTF8String
-    );
+    @synchronized( self )
+    {
+        self.promptStrings = parts.copy;
+        
+        if( parts.count == 0 )
+        {
+            self.prompt = @"";
+        }
+        
+        prompt = [ NSMutableString new ];
+        i      = 0;
+        
+        for( part in parts )
+        {
+            part = [ part stringWithShellColor: colors[ i % ( sizeof( colors ) / sizeof( SKColor ) ) ] ];
+            
+            [ prompt appendFormat: @"[ %@ ]> ", part ];
+            
+            i++;
+        }
+        
+        [ self observerPrompt: NO ];
+        
+        self.prompt = prompt;
+        
+        [ self observerPrompt: YES ];
+    }
+}
+
+- ( void )addPromptPart:( NSString * )part
+{
+    self.promptParts = [ self.promptParts arrayByAddingObject: part ];
+}
+
+- ( void )removeLastPromptPart
+{
+    NSMutableArray * parts;
+    
+    parts = self.promptParts.mutableCopy;
+    
+    if( parts.count )
+    {
+        [ parts removeLastObject ];
+        
+        self.promptParts = parts;
+    }
 }
 
 @end

@@ -34,8 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKShell: NSObject
 
-@property( atomic, readonly                    ) BOOL       supportsColor;
-@property( atomic, readwrite, strong, nullable ) NSString * prompt;
+@property( atomic, readonly                    ) BOOL                    supportsColor;
+@property( atomic, readwrite, strong, nullable ) NSString              * prompt;
+@property( atomic, readwrite, strong, nullable ) NSArray< NSString * > * promptParts;
 
 + ( instancetype )currentShell;
 
@@ -45,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status;
 - ( void )printMessage: ( NSString * )message color: ( SKColor )color;
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color;
+- ( void )addPromptPart:( NSString * )part;
+- ( void )removeLastPromptPart;
 
 @end
 
