@@ -106,7 +106,7 @@ NS_ASSUME_NONNULL_END
     {
         if( self.recover )
         {
-            [ [ SKShell currentShell ] printMessage: @"Task failed - Trying to recover..." status: SKStatusWarning color: SKColorYellow ];
+            [ [ SKShell currentShell ] printMessageWithFormat: @"Task failed with status %li - Trying to recover..." status: SKStatusWarning color: SKColorYellow, ( long )( task.terminationStatus ) ];
             
             {
                 BOOL ret;
@@ -119,6 +119,8 @@ NS_ASSUME_NONNULL_END
         }
         
         self.error = [ self errorWithDescription: @"Task exited with status %li", ( long )( task.terminationStatus ) ];
+        
+        [ [ SKShell currentShell ] printError: self.error ];
         
         return NO;
     }
