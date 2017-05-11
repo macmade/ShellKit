@@ -7,12 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		054B00361EC4E8D20032B500 /* SKAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B002B1EC4E8D20032B500 /* SKAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B00381EC4E8D20032B500 /* SKAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002C1EC4E8D20032B500 /* SKAction.m */; };
+		054B00391EC4E8D20032B500 /* SKAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002C1EC4E8D20032B500 /* SKAction.m */; };
+		054B003A1EC4E8D20032B500 /* SKObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B002D1EC4E8D20032B500 /* SKObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B003C1EC4E8D20032B500 /* SKObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002E1EC4E8D20032B500 /* SKObject.m */; };
+		054B003D1EC4E8D20032B500 /* SKObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002E1EC4E8D20032B500 /* SKObject.m */; };
+		054B003E1EC4E8D20032B500 /* SKRunableObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B002F1EC4E8D20032B500 /* SKRunableObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B00401EC4E8D20032B500 /* SKShell.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B00301EC4E8D20032B500 /* SKShell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B00421EC4E8D20032B500 /* SKShell.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B00311EC4E8D20032B500 /* SKShell.m */; };
+		054B00431EC4E8D20032B500 /* SKShell.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B00311EC4E8D20032B500 /* SKShell.m */; };
+		054B00441EC4E8D20032B500 /* SKTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B00321EC4E8D20032B500 /* SKTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B00461EC4E8D20032B500 /* SKTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B00331EC4E8D20032B500 /* SKTask.m */; };
+		054B00471EC4E8D20032B500 /* SKTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B00331EC4E8D20032B500 /* SKTask.m */; };
+		054B00481EC4E8D20032B500 /* SKTaskGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B00341EC4E8D20032B500 /* SKTaskGroup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B004A1EC4E8D20032B500 /* SKTaskGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B00351EC4E8D20032B500 /* SKTaskGroup.m */; };
+		054B004B1EC4E8D20032B500 /* SKTaskGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B00351EC4E8D20032B500 /* SKTaskGroup.m */; };
+		054B004E1EC4EA050032B500 /* NSString+ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B004C1EC4EA050032B500 /* NSString+ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		054B00501EC4EA050032B500 /* NSString+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B004D1EC4EA050032B500 /* NSString+ShellKit.m */; };
+		054B00511EC4EA050032B500 /* NSString+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B004D1EC4EA050032B500 /* NSString+ShellKit.m */; };
 		054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 054BFFF01EC4E60B0032B500 /* ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		05110D041C1F121C00EE6851 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		05110D051C1F121C00EE6851 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		054B002B1EC4E8D20032B500 /* SKAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAction.h; sourceTree = "<group>"; };
+		054B002C1EC4E8D20032B500 /* SKAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAction.m; sourceTree = "<group>"; };
+		054B002D1EC4E8D20032B500 /* SKObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKObject.h; sourceTree = "<group>"; };
+		054B002E1EC4E8D20032B500 /* SKObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKObject.m; sourceTree = "<group>"; };
+		054B002F1EC4E8D20032B500 /* SKRunableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKRunableObject.h; sourceTree = "<group>"; };
+		054B00301EC4E8D20032B500 /* SKShell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKShell.h; sourceTree = "<group>"; };
+		054B00311EC4E8D20032B500 /* SKShell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKShell.m; sourceTree = "<group>"; };
+		054B00321EC4E8D20032B500 /* SKTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTask.h; sourceTree = "<group>"; };
+		054B00331EC4E8D20032B500 /* SKTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTask.m; sourceTree = "<group>"; };
+		054B00341EC4E8D20032B500 /* SKTaskGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTaskGroup.h; sourceTree = "<group>"; };
+		054B00351EC4E8D20032B500 /* SKTaskGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTaskGroup.m; sourceTree = "<group>"; };
+		054B004C1EC4EA050032B500 /* NSString+ShellKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ShellKit.h"; sourceTree = "<group>"; };
+		054B004D1EC4EA050032B500 /* NSString+ShellKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShellKit.m"; sourceTree = "<group>"; };
 		054BFFEE1EC4E60B0032B500 /* ShellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		054BFFF01EC4E60B0032B500 /* ShellKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShellKit.h; sourceTree = "<group>"; };
 		054BFFF11EC4E60B0032B500 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -48,6 +80,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		054B002A1EC4E8D20032B500 /* ShellKit */ = {
+			isa = PBXGroup;
+			children = (
+				054B002B1EC4E8D20032B500 /* SKAction.h */,
+				054B002C1EC4E8D20032B500 /* SKAction.m */,
+				054B002D1EC4E8D20032B500 /* SKObject.h */,
+				054B002E1EC4E8D20032B500 /* SKObject.m */,
+				054B002F1EC4E8D20032B500 /* SKRunableObject.h */,
+				054B00301EC4E8D20032B500 /* SKShell.h */,
+				054B00311EC4E8D20032B500 /* SKShell.m */,
+				054B00321EC4E8D20032B500 /* SKTask.h */,
+				054B00331EC4E8D20032B500 /* SKTask.m */,
+				054B00341EC4E8D20032B500 /* SKTaskGroup.h */,
+				054B00351EC4E8D20032B500 /* SKTaskGroup.m */,
+				054B004C1EC4EA050032B500 /* NSString+ShellKit.h */,
+				054B004D1EC4EA050032B500 /* NSString+ShellKit.m */,
+			);
+			path = ShellKit;
+			sourceTree = "<group>";
+		};
 		054BFFEF1EC4E60B0032B500 /* ShellKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +113,7 @@
 		054BFFF61EC4E61D0032B500 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				054B002A1EC4E8D20032B500 /* ShellKit */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -92,7 +145,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054B00401EC4E8D20032B500 /* SKShell.h in Headers */,
+				054B00441EC4E8D20032B500 /* SKTask.h in Headers */,
+				054B003A1EC4E8D20032B500 /* SKObject.h in Headers */,
+				054B003E1EC4E8D20032B500 /* SKRunableObject.h in Headers */,
+				054B004E1EC4EA050032B500 /* NSString+ShellKit.h in Headers */,
 				054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */,
+				054B00361EC4E8D20032B500 /* SKAction.h in Headers */,
+				054B00481EC4E8D20032B500 /* SKTaskGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +253,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054B00381EC4E8D20032B500 /* SKAction.m in Sources */,
+				054B00501EC4EA050032B500 /* NSString+ShellKit.m in Sources */,
+				054B00421EC4E8D20032B500 /* SKShell.m in Sources */,
+				054B004A1EC4E8D20032B500 /* SKTaskGroup.m in Sources */,
+				054B003C1EC4E8D20032B500 /* SKObject.m in Sources */,
+				054B00461EC4E8D20032B500 /* SKTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +266,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054B00391EC4E8D20032B500 /* SKAction.m in Sources */,
+				054B00511EC4EA050032B500 /* NSString+ShellKit.m in Sources */,
+				054B00431EC4E8D20032B500 /* SKShell.m in Sources */,
+				054B004B1EC4E8D20032B500 /* SKTaskGroup.m in Sources */,
+				054B003D1EC4E8D20032B500 /* SKObject.m in Sources */,
+				054B00471EC4E8D20032B500 /* SKTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

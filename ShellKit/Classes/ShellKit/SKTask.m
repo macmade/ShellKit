@@ -23,14 +23,20 @@
  ******************************************************************************/
 
 /*!
- * @file        ShellKit.h
+ * @file        SKTask.m
  * @copyright   (c) 2017, Jean-David Gadina - www.xs-labs.com
  */
 
-#import <ShellKit/NSString+ShellKit.h>
-#import <ShellKit/SKObject.h>
-#import <ShellKit/SKRunableObject.h>
-#import <ShellKit/SKShell.h>
-#import <ShellKit/SKTask.h>
-#import <ShellKit/SKTaskGroup.h>
-#import <ShellKit/SKAction.h>
+#import "SKTask.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface SKTask()
+
+@end
+
+NS_ASSUME_NONNULL_END
+
+@implementation SKTask
+
+@end
