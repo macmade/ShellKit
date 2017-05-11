@@ -26,6 +26,7 @@
 		054B004E1EC4EA050032B500 /* NSString+ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B004C1EC4EA050032B500 /* NSString+ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		054B00501EC4EA050032B500 /* NSString+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B004D1EC4EA050032B500 /* NSString+ShellKit.m */; };
 		054B00511EC4EA050032B500 /* NSString+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B004D1EC4EA050032B500 /* NSString+ShellKit.m */; };
+		054B00541EC4EA950032B500 /* SKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B00521EC4EA950032B500 /* SKTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 054BFFF01EC4E60B0032B500 /* ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		054B00351EC4E8D20032B500 /* SKTaskGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTaskGroup.m; sourceTree = "<group>"; };
 		054B004C1EC4EA050032B500 /* NSString+ShellKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ShellKit.h"; sourceTree = "<group>"; };
 		054B004D1EC4EA050032B500 /* NSString+ShellKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ShellKit.m"; sourceTree = "<group>"; };
+		054B00521EC4EA950032B500 /* SKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTypes.h; sourceTree = "<group>"; };
 		054BFFEE1EC4E60B0032B500 /* ShellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		054BFFF01EC4E60B0032B500 /* ShellKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShellKit.h; sourceTree = "<group>"; };
 		054BFFF11EC4E60B0032B500 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -83,6 +85,8 @@
 		054B002A1EC4E8D20032B500 /* ShellKit */ = {
 			isa = PBXGroup;
 			children = (
+				054B004C1EC4EA050032B500 /* NSString+ShellKit.h */,
+				054B004D1EC4EA050032B500 /* NSString+ShellKit.m */,
 				054B002B1EC4E8D20032B500 /* SKAction.h */,
 				054B002C1EC4E8D20032B500 /* SKAction.m */,
 				054B002D1EC4E8D20032B500 /* SKObject.h */,
@@ -94,8 +98,7 @@
 				054B00331EC4E8D20032B500 /* SKTask.m */,
 				054B00341EC4E8D20032B500 /* SKTaskGroup.h */,
 				054B00351EC4E8D20032B500 /* SKTaskGroup.m */,
-				054B004C1EC4EA050032B500 /* NSString+ShellKit.h */,
-				054B004D1EC4EA050032B500 /* NSString+ShellKit.m */,
+				054B00521EC4EA950032B500 /* SKTypes.h */,
 			);
 			path = ShellKit;
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 				054B003E1EC4E8D20032B500 /* SKRunableObject.h in Headers */,
 				054B004E1EC4EA050032B500 /* NSString+ShellKit.h in Headers */,
 				054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */,
+				054B00541EC4EA950032B500 /* SKTypes.h in Headers */,
 				054B00361EC4E8D20032B500 /* SKAction.h in Headers */,
 				054B00481EC4E8D20032B500 /* SKTaskGroup.h in Headers */,
 			);
