@@ -26,11 +26,13 @@ For complete examples, please take a look at the [source code](https://github.co
 
 A shell command can by run by using the `SKTask` object:
 
-    SKTask * task;
-    
-    task = [ SKTask taskWithShellScript: @"ls -al" ];
-    
-    [ task run ];
+```objc
+SKTask * task;
+
+task = [ SKTask taskWithShellScript: @"ls -al" ];
+
+[ task run ];
+```
 
 The task is run synchronously, and its output, if any, will be automatically printed to `stdout`.
 
@@ -47,11 +49,13 @@ The task will print the executed command prior to running, and print a status me
     
 A task can have sub-tasks, to try to recover from a failure:
 
-    SKTask * task;
-    
-    task = [ SKTask taskWithShellScript: @"false" recoverTask: [ SKTask taskWithShellScript: @"true" ] ];
-    
-    [ task run ];
+```objc
+SKTask * task;
+
+task = [ SKTask taskWithShellScript: @"false" recoverTask: [ SKTask taskWithShellScript: @"true" ] ];
+
+[ task run ];
+```
 
 Here, the `false` task will obviously fail, but it will then execute the `true` task, set as recovery.  
 As `true` will succeed, the `false` task will also succeed:
@@ -66,16 +70,17 @@ As `true` will succeed, the `false` task will also succeed:
 
 Multiple tasks can be grouped in a `SKTaskGroup` object:
 
+```objc
+SKTask      * t1;
+SKTask      * t2;
+SKTaskGroup * group;
 
-    SKTask      * t1;
-    SKTask      * t2;
-    SKTaskGroup * group;
-    
-    t1    = [ SKTask taskWithShellScript: @"true" ];
-    t2    = [ SKTask taskWithShellScript: @"true" ];
-    group = [ SKTaskGroup taskGroupWithName: @"task-group" tasks: @[ t1, t2 ] ];
-            
-    [ group run ];
+t1    = [ SKTask taskWithShellScript: @"true" ];
+t2    = [ SKTask taskWithShellScript: @"true" ];
+group = [ SKTaskGroup taskGroupWithName: @"task-group" tasks: @[ t1, t2 ] ];
+        
+[ group run ];
+```
 
 The group will try to run each task.  
 If a task fails, the whole group will also fail.
@@ -92,19 +97,21 @@ Running actions
 
 Actions, represented by the `SKAction` class, consist of a group of task groups (`SKTaskGroups`):
 
-    SKTask      * t1;
-    SKTask      * t2;
-    SKTaskGroup * g1;
-    SKTaskGroup * g2;
-    SKAction    * action;
-    
-    t1     = [ SKTask taskWithShellScript: @"true" ];
-    t2     = [ SKTask taskWithShellScript: @"true" ];
-    g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
-    g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t2 ] ];
-    action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
-    
-    [ action run ];
+```objc
+SKTask      * t1;
+SKTask      * t2;
+SKTaskGroup * g1;
+SKTaskGroup * g2;
+SKAction    * action;
+
+t1     = [ SKTask taskWithShellScript: @"true" ];
+t2     = [ SKTask taskWithShellScript: @"true" ];
+g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
+g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t2 ] ];
+action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+
+[ action run ];
+```
 
 The action will try to run each task group.  
 If a task group fails, the whole action will also fail.
@@ -135,19 +142,24 @@ Printing messages
 Messages can be printed very easily.  
 For this purpose, the `SKShell` class provides several methods, like the following one:
 
-    - ( void )printMessage: ( NSString * )message
-              status:       ( SKStatus )status
-              color:        ( SKColor )color;
+
+```objc
+- ( void )printMessage: ( NSString * )message
+          status:       ( SKStatus )status
+          color:        ( SKColor )color;
+```
 
 The status represents an optional icon.  
 Colors can also be used, if the terminal supports it.
 
 As an example:
 
-    [ [ SKShell currentShell ] printMessage: @"hello, world"
-                               status:       SKStatusDebug
-                               color:        SKColorCyan
-    ];
+```objc
+[ [ SKShell currentShell ] printMessage: @"hello, world"
+                           status:       SKStatusDebug
+                           color:        SKColorCyan
+];
+```
 
 will produce:
 
@@ -160,7 +172,9 @@ The prompt can be customised to reflect the hierarchy of the invoked commands.
 
 For instance:
 
-    [ SKShell currentShell ].promptParts = @[ @"foo", @"bar" ];
+```objc
+[ SKShell currentShell ].promptParts = @[ @"foo", @"bar" ];
+```
 
 Then, every printed message will be prefixed by:
 
