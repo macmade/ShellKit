@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property( atomic, readwrite, strong, nullable ) NSDictionary< NSString *, NSString * > * variables;
 
+- ( instancetype )initWithShellScript: ( NSString * )script;
+- ( instancetype )initWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover NS_DESIGNATED_INITIALIZER;
+
 @end
 
 NS_ASSUME_NONNULL_END

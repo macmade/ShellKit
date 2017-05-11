@@ -33,14 +33,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKTask()
 
-@property( atomic, readwrite, assign           ) BOOL      running;
-@property( atomic, readwrite, strong, nullable ) NSError * error;
+@property( atomic, readwrite, assign           ) BOOL       running;
+@property( atomic, readwrite, strong, nullable ) NSError  * error;
+@property( atomic, readwrite, strong           ) NSString * script;
+@property( atomic, readwrite, strong, nullable ) SKTask   * recover;
 
 @end
 
 NS_ASSUME_NONNULL_END
 
 @implementation SKTask
+
+- ( instancetype )init
+{
+    return [ self initWithShellScript: @"" ];
+}
+
+- ( instancetype )initWithShellScript: ( NSString * )script
+{
+    return [ self initWithShellScript: script recoverTask: nil ];
+}
+
+- ( instancetype )initWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover
+{
+    if( ( self = [ super init ] ) )
+    {
+        self.script  = script;
+        self.recover = recover;
+    }
+    
+    return self;
+}
 
 #pragma mark - SKRunableObject
 
