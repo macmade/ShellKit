@@ -44,6 +44,16 @@ NS_ASSUME_NONNULL_END
 
 @implementation SKTask
 
++ ( instancetype )taskWithShellScript: ( NSString * )script
+{
+    return [ [ self alloc ] initWithShellScript: script ];
+}
+
++ ( instancetype )taskWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover;
+{
+    return [ [ self alloc ] initWithShellScript: script recoverTask: recover ];
+}
+
 - ( instancetype )init
 {
     return [ self initWithShellScript: @"" ];
@@ -69,7 +79,53 @@ NS_ASSUME_NONNULL_END
 
 - ( BOOL )run
 {
-    return NO;
+    NSTask * task;
+    
+    if( self.script.length == 0 )
+    {
+        self.error = [ self errorWithDescription: @"No script defined" ];
+        
+        return NO;
+    }
+    
+    [ [ SKShell currentShell ] printMessage: self.script status: SKStatusExecute color: SKColorCyan ];
+    
+    task            = [ NSTask new ];
+    task.launchPath = @"/bin/sh";
+    task.arguments  =
+    @[
+        @"-l",
+        @"-c",
+        self.script
+    ];
+    
+    [ task launch ];
+    [ task waitUntilExit ];
+    
+    if( task.terminationStatus != 0 )
+    {
+        if( self.recover )
+        {
+            [ [ SKShell currentShell ] printMessage: @"Task failed - Trying to recover..." status: SKStatusWarning color: SKColorYellow ];
+            
+            {
+                BOOL ret;
+                
+                ret        = [ self.recover run ];
+                self.error = self.recover.error;
+                
+                return ret;
+            }
+        }
+        
+        self.error = [ self errorWithDescription: @"Task exited with status %li", ( long )( task.terminationStatus ) ];
+        
+        return NO;
+    }
+    
+    [ [ SKShell currentShell ] printMessage: @"Task completed successfully" status: SKStatusSuccess color: SKColorGreen ];
+    
+    return YES;
 }
 
 @end
