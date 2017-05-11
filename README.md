@@ -95,7 +95,7 @@ If a task fails, the whole group will also fail.
 Running actions
 ---------------
 
-Actions, represented by the `SKAction` class, consist of a group of task groups (`SKTaskGroups`):
+Actions, represented by the `SKAction` class, consist of a group of task groups (`SKTaskGroup`):
 
 ```objc
 SKTask      * t1;
