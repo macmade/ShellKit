@@ -29,7 +29,31 @@
 		054B00541EC4EA950032B500 /* SKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B00521EC4EA950032B500 /* SKTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		054B00561EC4ECA60032B500 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C35D8A1EC3D0F500F373E7 /* libcurses.tbd */; };
 		054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 054BFFF01EC4E60B0032B500 /* ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		05CF703D1EC4FE2C00A39841 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CF703C1EC4FE2C00A39841 /* main.m */; };
+		05CF70431EC4FE4900A39841 /* ShellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054BFFEE1EC4E60B0032B500 /* ShellKit.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		05CF70411EC4FE4600A39841 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05BD894A1A13FF4700A43CD8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 054BFFED1EC4E60B0032B500;
+			remoteInfo = ShellKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		05CF70381EC4FE2C00A39841 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05110D041C1F121C00EE6851 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -53,6 +77,8 @@
 		054BFFF11EC4E60B0032B500 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		054BFFFB1EC4E6670032B500 /* libShellKit-Static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libShellKit-Static.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05C35D8A1EC3D0F500F373E7 /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
+		05CF703A1EC4FE2C00A39841 /* ShellKit-Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ShellKit-Test"; sourceTree = BUILT_PRODUCTS_DIR; };
+		05CF703C1EC4FE2C00A39841 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		05CFB82C1EC30AF70020A075 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -69,6 +95,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		05CF70371EC4FE2C00A39841 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05CF70431EC4FE4900A39841 /* ShellKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +163,7 @@
 				05110D041C1F121C00EE6851 /* LICENSE */,
 				05110D051C1F121C00EE6851 /* README.md */,
 				054BFFEF1EC4E60B0032B500 /* ShellKit */,
+				05CF703B1EC4FE2C00A39841 /* ShellKit-Test */,
 				05BD89531A13FF4700A43CD8 /* Products */,
 				050B83E21EB919CB0090EA12 /* Frameworks */,
 			);
@@ -139,8 +174,17 @@
 			children = (
 				054BFFEE1EC4E60B0032B500 /* ShellKit.framework */,
 				054BFFFB1EC4E6670032B500 /* libShellKit-Static.a */,
+				05CF703A1EC4FE2C00A39841 /* ShellKit-Test */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		05CF703B1EC4FE2C00A39841 /* ShellKit-Test */ = {
+			isa = PBXGroup;
+			children = (
+				05CF703C1EC4FE2C00A39841 /* main.m */,
+			);
+			path = "ShellKit-Test";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +251,24 @@
 			productReference = 054BFFFB1EC4E6670032B500 /* libShellKit-Static.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		05CF70391EC4FE2C00A39841 /* ShellKit-Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05CF70401EC4FE2C00A39841 /* Build configuration list for PBXNativeTarget "ShellKit-Test" */;
+			buildPhases = (
+				05CF70361EC4FE2C00A39841 /* Sources */,
+				05CF70371EC4FE2C00A39841 /* Frameworks */,
+				05CF70381EC4FE2C00A39841 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				05CF70421EC4FE4600A39841 /* PBXTargetDependency */,
+			);
+			name = "ShellKit-Test";
+			productName = "ShellKit-Test";
+			productReference = 05CF703A1EC4FE2C00A39841 /* ShellKit-Test */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -221,6 +283,10 @@
 						ProvisioningStyle = Automatic;
 					};
 					054BFFFA1EC4E6670032B500 = {
+						CreatedOnToolsVersion = 8.3.1;
+						ProvisioningStyle = Automatic;
+					};
+					05CF70391EC4FE2C00A39841 = {
 						CreatedOnToolsVersion = 8.3.1;
 						ProvisioningStyle = Automatic;
 					};
@@ -240,6 +306,7 @@
 			targets = (
 				054BFFED1EC4E60B0032B500 /* ShellKit */,
 				054BFFFA1EC4E6670032B500 /* ShellKit-Static */,
+				05CF70391EC4FE2C00A39841 /* ShellKit-Test */,
 			);
 		};
 /* End PBXProject section */
@@ -281,7 +348,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		05CF70361EC4FE2C00A39841 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				05CF703D1EC4FE2C00A39841 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		05CF70421EC4FE4600A39841 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 054BFFED1EC4E60B0032B500 /* ShellKit */;
+			targetProxy = 05CF70411EC4FE4600A39841 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		054B00021EC4E6670032B500 /* Debug */ = {
@@ -565,6 +648,22 @@
 			};
 			name = Release;
 		};
+		05CF703E1EC4FE2C00A39841 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		05CF703F1EC4FE2C00A39841 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -575,6 +674,7 @@
 				054B00031EC4E6670032B500 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		054BFFF31EC4E60B0032B500 /* Build configuration list for PBXNativeTarget "ShellKit" */ = {
 			isa = XCConfigurationList;
@@ -583,6 +683,7 @@
 				054BFFF51EC4E60B0032B500 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		05BD894D1A13FF4700A43CD8 /* Build configuration list for PBXProject "ShellKit" */ = {
 			isa = XCConfigurationList;
@@ -592,6 +693,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		05CF70401EC4FE2C00A39841 /* Build configuration list for PBXNativeTarget "ShellKit-Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				05CF703E1EC4FE2C00A39841 /* Debug */,
+				05CF703F1EC4FE2C00A39841 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
