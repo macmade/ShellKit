@@ -34,6 +34,8 @@ int main( void )
 {
     @autoreleasepool
     {
+        [ SKShell currentShell ].promptParts = @[ @"ShellKit-Test" ];
+        
         /***********************************************************************
          * Simple task
          **********************************************************************/
@@ -41,6 +43,28 @@ int main( void )
             SKTask * task;
             
             task = [ SKTask taskWithShellScript: @"true" ];
+            
+            [ task run ];
+        }
+        
+        /***********************************************************************
+         * Simple task failure
+         **********************************************************************/
+        {
+            SKTask * task;
+            
+            task = [ SKTask taskWithShellScript: @"false" ];
+            
+            [ task run ];
+        }
+        
+        /***********************************************************************
+         * Simple task failure with recovery
+         **********************************************************************/
+        {
+            SKTask * task;
+            
+            task = [ SKTask taskWithShellScript: @"false" recoverTask: [ SKTask taskWithShellScript: @"true" ] ];
             
             [ task run ];
         }
