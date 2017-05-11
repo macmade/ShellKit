@@ -30,9 +30,10 @@
 		054B00561EC4ECA60032B500 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C35D8A1EC3D0F500F373E7 /* libcurses.tbd */; };
 		054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 054BFFF01EC4E60B0032B500 /* ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		05CF703D1EC4FE2C00A39841 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CF703C1EC4FE2C00A39841 /* main.m */; };
-		05CF70431EC4FE4900A39841 /* ShellKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054BFFEE1EC4E60B0032B500 /* ShellKit.framework */; };
 		05CF70451EC5003D00A39841 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05CF70441EC5003D00A39841 /* Foundation.framework */; };
 		05CF70461EC5004800A39841 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05CF70441EC5003D00A39841 /* Foundation.framework */; };
+		05CF70471EC505D200A39841 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C35D8A1EC3D0F500F373E7 /* libcurses.tbd */; };
+		05CF70481EC505D700A39841 /* libShellKit-Static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 054BFFFB1EC4E6670032B500 /* libShellKit-Static.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,8 +107,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05CF70481EC505D700A39841 /* libShellKit-Static.a in Frameworks */,
+				05CF70471EC505D200A39841 /* libcurses.tbd in Frameworks */,
 				05CF70461EC5004800A39841 /* Foundation.framework in Frameworks */,
-				05CF70431EC4FE4900A39841 /* ShellKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +660,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -666,6 +672,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
