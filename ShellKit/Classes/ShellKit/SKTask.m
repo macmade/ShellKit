@@ -88,7 +88,7 @@ NS_ASSUME_NONNULL_END
         return NO;
     }
     
-    [ [ SKShell currentShell ] printMessage: self.script status: SKStatusExecute color: SKColorCyan ];
+    [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ self.script stringWithShellColor: SKColorCyan ] ];
     
     task            = [ NSTask new ];
     task.launchPath = @"/bin/sh";
