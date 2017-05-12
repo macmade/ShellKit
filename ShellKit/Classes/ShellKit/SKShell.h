@@ -32,13 +32,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOutput, NSString * standardError );
+
 @interface SKShell: NSObject
 
 @property( atomic, readonly                    ) BOOL                    supportsColor;
 @property( atomic, readwrite, strong, nullable ) NSString              * prompt;
 @property( atomic, readwrite, strong, nullable ) NSArray< NSString * > * promptParts;
+@property( atomic, readonly,          nullable ) NSString              * shell;
 
 + ( instancetype )currentShell;
+
+- ( nullable NSString * )pathForCommand: ( NSString * )command;
+- ( BOOL )isCommandAvailable: ( NSString * )command;
+
+- ( BOOL )runCommand: ( NSString * )command;
+- ( BOOL )runCommand: ( NSString * )command stdandardInput: ( nullable NSString * )input;
+- ( BOOL )runCommand: ( NSString * )command completion: ( nullable SKShellCommandCompletion )completion;
+- ( BOOL )runCommand: ( NSString * )command stdandardInput: ( nullable NSString * )input completion: ( nullable SKShellCommandCompletion )completion;
+- ( void )runCommandAsynchronously: ( NSString * )command;
+- ( void )runCommandAsynchronously: ( NSString * )command stdandardInput: ( nullable NSString * )input;
+- ( void )runCommandAsynchronously: ( NSString * )command stdandardInput: ( nullable NSString * )input completion: ( nullable SKShellCommandCompletion )completion;
 
 - ( void )printError: ( nullable NSError * )error;
 - ( void )printErrorMessage: ( NSString * )message;

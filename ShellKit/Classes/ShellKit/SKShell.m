@@ -35,9 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKShell()
 
-@property( atomic, readwrite, assign ) BOOL                    observingPrompt;
-@property( atomic, readwrite, assign ) BOOL                    hasPromptParts;
-@property( atomic, readwrite, strong ) NSArray< NSString * > * promptStrings;
+@property( atomic, readwrite, assign           ) BOOL                    observingPrompt;
+@property( atomic, readwrite, assign           ) BOOL                    hasPromptParts;
+@property( atomic, readwrite, strong           ) NSArray< NSString * > * promptStrings;
+@property( atomic, readwrite, strong           ) dispatch_queue_t        dispatchQueue;
+@property( atomic, readwrite, strong, nullable ) NSString              * shell;
 
 - ( void )observerPrompt: ( BOOL )observe;
 
@@ -68,7 +70,9 @@ NS_ASSUME_NONNULL_END
 {
     if( ( self = [ super init ] ) )
     {
+        self.shell         = [ NSProcessInfo processInfo ].environment[ @"SHELL" ];
         self.promptStrings = @[];
+        self.dispatchQueue = dispatch_queue_create( "com.xs-labs.ShellKit.SKShell", DISPATCH_QUEUE_CONCURRENT );
         
         [ self observerPrompt: YES ];
     }
@@ -122,6 +126,166 @@ NS_ASSUME_NONNULL_END
     }
     
     return YES;
+}
+
+- ( nullable NSString * )pathForCommand: ( NSString * )command
+{
+    __block BOOL             success;
+    __block NSString       * output;
+    SKShellCommandCompletion completion;
+    
+    completion = ^( int status, NSString * stdandardOutput, NSString * standardError )
+    {
+        success = status == EXIT_SUCCESS;
+        output  = stdandardOutput;
+        
+        ( void )standardError;
+    };
+    
+    @try
+    {
+        if( [ self runCommand: [ NSString stringWithFormat: @"which %@", command ] completion: completion ] == NO )
+        {
+            return nil;
+        }
+    }
+    @catch( NSException * exception )
+    {
+        ( void )exception;
+        
+        return nil;
+    }
+    
+    if( success == NO || output.length == 0 )
+    {
+        return nil;
+    }
+    
+    output = [ output stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceAndNewlineCharacterSet ] ];
+    
+    if( output.length == 0 || [ [ NSFileManager defaultManager ] fileExistsAtPath: output ] == NO )
+    {
+        return nil;
+    }
+    
+    return output;
+}
+
+- ( BOOL )isCommandAvailable: ( NSString * )command
+{
+    return [ self pathForCommand: command ] != nil;
+}
+
+- ( BOOL )runCommand: ( NSString * )command
+{
+    return [ self runCommand: command stdandardInput: nil ];
+}
+
+- ( BOOL )runCommand: ( NSString * )command stdandardInput: ( nullable NSString * )input
+{
+    return [ self runCommand: command stdandardInput: input completion: NULL ];
+}
+
+- ( BOOL )runCommand: ( NSString * )command completion: ( nullable SKShellCommandCompletion )completion
+{
+    return [ self runCommand: command stdandardInput: nil completion: completion ];
+}
+
+- ( BOOL )runCommand: ( NSString * )command stdandardInput: ( nullable NSString * )input completion: ( nullable  void ( ^ )( int status, NSString * stdandardOutput, NSString * standardError ) )completion
+{
+    NSTask       * task;
+    NSPipe       * stdinPipe;
+    NSPipe       * stdoutPipe;
+    NSPipe       * stderrPipe;
+        
+    if( self.shell.length == NO || [ [ NSFileManager defaultManager ] fileExistsAtPath: self.shell ] == NO )
+    {
+        @throw [ NSException exceptionWithName: @"com.xs-labs.ShellKit.SKShellException" reason: @"SHELL environment variable is not defined" userInfo: [ NSProcessInfo processInfo ].environment ];
+    }
+    
+    stdinPipe           = [ NSPipe pipe ];
+    stdoutPipe          = [ NSPipe pipe ];
+    stderrPipe          = [ NSPipe pipe ];
+    task                = [ NSTask new ];
+    task.launchPath     = self.shell;
+    task.arguments      = @[ @"-l", @"-c", command ];
+    task.standardOutput = stdoutPipe;
+    task.standardError  = stderrPipe;
+    
+    if( input )
+    {
+        task.standardInput = stdinPipe;
+    }
+    
+    [ task launch ];
+    
+    if( input )
+    {
+        [ stdinPipe.fileHandleForWriting writeData: [ input dataUsingEncoding: NSUTF8StringEncoding ] ];
+    }
+    
+    [ task waitUntilExit ];
+    
+    if( completion )
+    {
+        {
+            NSString * output;
+            NSString * error;
+            
+            @try
+            {
+                output = [ [ NSString alloc ] initWithData: [ stdoutPipe.fileHandleForReading readDataToEndOfFile ] encoding: NSUTF8StringEncoding ];
+            }
+            @catch( NSException * exception )
+            {
+                ( void )exception;
+                
+                output = nil;
+            }
+            
+            @try
+            {
+                error = [ [ NSString alloc ] initWithData: [ stdoutPipe.fileHandleForReading readDataToEndOfFile ] encoding: NSUTF8StringEncoding ];
+            }
+            @catch( NSException * exception )
+            {
+                ( void )exception;
+                
+                error = nil;
+            }
+            
+            completion
+            (
+                task.terminationStatus,
+                ( output ) ? output : @"",
+                ( error  ) ? error  : @""
+            );
+        }
+    }
+    
+    return task.terminationStatus == EXIT_SUCCESS;
+}
+
+- ( void )runCommandAsynchronously: ( NSString * )command;
+{
+    [ self runCommandAsynchronously: command stdandardInput: nil ];
+}
+
+- ( void )runCommandAsynchronously: ( NSString * )command stdandardInput: ( nullable NSString * )input
+{
+    [ self runCommandAsynchronously: command stdandardInput: input completion: NULL ];
+}
+
+- ( void )runCommandAsynchronously: ( NSString * )command stdandardInput: ( nullable NSString * )input completion: ( nullable void ( ^ )( int status, NSString * stdandardOutput, NSString * standardError ) )completion
+{
+    dispatch_async
+    (
+        self.dispatchQueue,
+        ^( void )
+        {
+            [ self runCommand: command stdandardInput: input completion: completion ];
+        }
+    );
 }
 
 - ( void )printError: ( nullable NSError * )error

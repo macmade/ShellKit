@@ -53,6 +53,24 @@ int main( void )
     {
         [ SKShell currentShell ].promptParts = @[ @"ShellKit" ];
         
+        PrintStep( @"Shell infos" );
+        
+        {
+            NSString * shell;
+            NSString * brew;
+            NSString * xcodebuild;
+            
+            shell      = [ SKShell currentShell ].shell;
+            brew       = [ [ SKShell currentShell ] pathForCommand: @"brew" ];
+            xcodebuild = [ [ SKShell currentShell ] pathForCommand: @"xcodebuild" ];
+            
+            assert( shell != nil );
+            
+            [ [ SKShell currentShell ] printMessageWithFormat: @"shell:      %@" status: SKStatusSettings, shell ];
+            [ [ SKShell currentShell ] printMessageWithFormat: @"brew:       %@" status: SKStatusSettings, ( brew       ) ? brew       : @"--" ];
+            [ [ SKShell currentShell ] printMessageWithFormat: @"xcodebuild: %@" status: SKStatusSettings, ( xcodebuild ) ? xcodebuild : @"--" ];
+        }
+        
         PrintStep( @"Simple task" );
         
         {

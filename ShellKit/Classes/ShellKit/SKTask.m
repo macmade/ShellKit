@@ -145,7 +145,7 @@ NS_ASSUME_NONNULL_END
         }
         
         task            = [ NSTask new ];
-        task.launchPath = @"/bin/sh";
+        task.launchPath = ( [ SKShell currentShell ].shell != nil ) ? [ SKShell currentShell ].shell : @"/bin/sh";
         task.arguments  =
         @[
             @"-l",
