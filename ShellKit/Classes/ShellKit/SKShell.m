@@ -70,9 +70,10 @@ NS_ASSUME_NONNULL_END
 {
     if( ( self = [ super init ] ) )
     {
-        self.shell         = [ NSProcessInfo processInfo ].environment[ @"SHELL" ];
-        self.promptStrings = @[];
-        self.dispatchQueue = dispatch_queue_create( "com.xs-labs.ShellKit.SKShell", DISPATCH_QUEUE_CONCURRENT );
+        self.shell                = [ NSProcessInfo processInfo ].environment[ @"SHELL" ];
+        self.promptStrings        = @[];
+        self.allowPromptHierarchy = YES;
+        self.dispatchQueue        = dispatch_queue_create( "com.xs-labs.ShellKit.SKShell", DISPATCH_QUEUE_CONCURRENT );
         
         [ self observerPrompt: YES ];
     }
@@ -489,12 +490,22 @@ NS_ASSUME_NONNULL_END
 
 - ( void )addPromptPart:( NSString * )part
 {
+    if( self.allowPromptHierarchy == NO )
+    {
+        return;
+    }
+    
     self.promptParts = [ self.promptParts arrayByAddingObject: part ];
 }
 
 - ( void )removeLastPromptPart
 {
     NSMutableArray * parts;
+    
+    if( self.allowPromptHierarchy == NO )
+    {
+        return;
+    }
     
     parts = self.promptParts.mutableCopy;
     

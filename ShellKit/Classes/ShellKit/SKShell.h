@@ -39,6 +39,7 @@ typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOut
 @property( atomic, readonly                    ) BOOL                    supportsColor;
 @property( atomic, readwrite, strong, nullable ) NSString              * prompt;
 @property( atomic, readwrite, strong, nullable ) NSArray< NSString * > * promptParts;
+@property( atomic, readwrite, assign           ) BOOL                    allowPromptHierarchy;
 @property( atomic, readonly,          nullable ) NSString              * shell;
 
 + ( instancetype )currentShell;
