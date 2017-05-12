@@ -210,20 +210,20 @@ int main( void )
         PrintStep( "Task arguments" );
         
         {
-            SKTask      * task;
-            
-            task = [ SKTask taskWithShellScript: @"ls $(args) $(dir)" ];
-            
+            SKTask * task;
+
+            task = [ SKTask taskWithShellScript: @"ls %{args}% %{dir}%" ];
+
             [ task run: @{ @"args" : @"-al", @"dir" : @"/usr" } ];
         }
         
         PrintStep( "Task arguments failure" );
         
         {
-            SKTask      * task;
-            
-            task = [ SKTask taskWithShellScript: @"echo $(hello) $(foo) $(bar)" ];
-            
+            SKTask * task;
+
+            task = [ SKTask taskWithShellScript: @"echo %{hello}% %{foo}% %{bar}%" ];
+
             [ task run: @{ @"hello" : @"hello, world" } ];
         }
     }

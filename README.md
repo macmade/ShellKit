@@ -131,10 +131,42 @@ If a task group fails, the whole action will also fail.
     [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> ✅  2 tasks completed successfully
     [ ShellKit ]> [ action ]> ✅  2 task groups completed successfully
 
-Arguments substitution
+Variables substitution
 ----------------------
 
-...
+A task may contain variables, that will be substituted when running.  
+A variable has the following form:
+
+    %{name}%
+
+The variable name may contain letters from A to Z (uppercase or lowercase) and numbers from 0 to 9.
+
+Variables are passed using the `run:` method of `SKTask`, `SKTaskGroup` and `SKAction`.
+
+```objc
+SKTask * task;
+
+task = [ SKTask taskWithShellScript: @"ls %{args}% %{dir}%" ];
+
+[ task run: @{ @"args" : @"-al", @"dir" : @"/usr" } ];
+```
+
+In the example above, the executed script will be: `ls -al /usr`.
+
+If no value is provided for a variable, the task will fail:
+
+```objc
+SKTask * task;
+
+task = [ SKTask taskWithShellScript: @"echo %{hello}% %{foo}% %{bar}%" ];
+
+[ task run: @{ @"hello" : @"hello, world" } ];
+```
+
+    [ ShellKit ]> 🚦  Running task: echo hello, world %{foo}% %{bar}%
+    [ ShellKit ]> ⚠️  No value provided value for variable: foo
+    [ ShellKit ]> ⚠️  No value provided value for variable: bar
+    [ ShellKit ]> ⛔️  Error - Script contains unsubstituted variables
 
 Printing messages
 -----------------

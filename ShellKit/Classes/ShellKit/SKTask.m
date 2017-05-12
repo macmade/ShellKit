@@ -117,7 +117,7 @@ NS_ASSUME_NONNULL_END
         
         for( key in variables )
         {
-            var    = [ NSString stringWithFormat: @"$(%@)", key ];
+            var    = [ NSString stringWithFormat: @"%%{%@}%%", key ];
             script = [ script stringByReplacingOccurrencesOfString: var withString: variables[ key ] ];
         }
         
@@ -125,14 +125,14 @@ NS_ASSUME_NONNULL_END
         
         [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ script stringWithShellColor: SKColorCyan ] ];
         
-        regex   = [ NSRegularExpression regularExpressionWithPattern: @"\\$\\(([A-Za-z0-9]+)\\)" options: NSRegularExpressionCaseInsensitive error: NULL ];
+        regex   = [ NSRegularExpression regularExpressionWithPattern: @"%\\{([A-Za-z0-9]+)\\}%" options: NSRegularExpressionCaseInsensitive error: NULL ];
         matches = [ regex matchesInString: script options: ( NSMatchingOptions )0 range: NSMakeRange( 0, script.length ) ];
         
         if( matches.count != 0 )
         {
             for( match in matches )
             {
-                [ [ SKShell currentShell ] printWarningMessageWithFormat: @"No value provided value for variable %@", [ script substringWithRange: match.range ] ];
+                [ [ SKShell currentShell ] printWarningMessageWithFormat: @"No value provided value for variable: %@", [ script substringWithRange: [ match rangeAtIndex: 1 ] ] ];
             }
             
             self.error = [ self errorWithDescription: @"Script contains unsubstituted variables" ];
