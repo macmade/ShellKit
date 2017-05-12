@@ -43,6 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 - ( void )printError: ( nullable NSError * )error;
 - ( void )printErrorMessage: ( NSString * )message;
 - ( void )printErrorMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printWarningMessage: ( NSString * )message;
+- ( void )printWarningMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
 
 - ( void )printMessage: ( NSString * )message;
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status;

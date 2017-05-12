@@ -163,6 +163,25 @@ NS_ASSUME_NONNULL_END
     [ self printErrorMessage: message ];
 }
 
+- ( void )printWarningMessage: ( NSString * )message
+{
+    [ self printMessage: message status: SKStatusWarning color: SKColorYellow ];
+}
+
+- ( void )printWarningMessageWithFormat: ( NSString * )format, ...
+{
+    NSString * message;
+    va_list    ap;
+    
+    va_start( ap, format );
+    
+    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+    
+    va_end( ap );
+    
+    [ self printWarningMessage: message ];
+}
+
 - ( void )printMessage: ( NSString * )message
 {
     [ self printMessage: message status: SKStatusNone color: SKColorNone ];
