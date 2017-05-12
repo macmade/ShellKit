@@ -95,6 +95,23 @@ As `true` will succeed, the `false` task will also succeed:
     [ ShellKit ]> ✅  Task completed successfully (66 ms)
     [ ShellKit ]> ✅  Task recovered successfully (66 ms)
 
+### Optional tasks
+
+A task can be marked as optional by using the `SKOptionalTask`.  
+In such a case, the task will succeed, regardless of its exit status:
+
+```objc
+SKOptionalTask * task;
+            
+task = [ SKOptionalTask taskWithShellScript: @"false" ];
+
+[ task run ];
+```
+
+    [ ShellKit ]> 🚦  Running task: false
+    [ ShellKit ]> ⛔️  Error - Task exited with status 1
+    [ ShellKit ]> ✅  Task is marked as optional - Not failing
+
 ### Running task groups
 
 Multiple tasks can be grouped in a `SKTaskGroup` object:
