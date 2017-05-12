@@ -48,7 +48,7 @@
         case SKStatusNone:      return @"";
         case SKStatusSuccess:   return @"✅";
         case SKStatusFatal:     return @"💣";
-        case SKStatusError:     return @"⛔️";
+        case SKStatusError:     return @"❌";
         case SKStatusWarning:   return @"⚠️";
         case SKStatusInfo:      return @"ℹ️";
         case SKStatusDebug:     return @"🚸";

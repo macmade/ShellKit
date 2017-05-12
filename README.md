@@ -109,7 +109,7 @@ task = [ SKOptionalTask taskWithShellScript: @"false" ];
 ```
 
     [ ShellKit ]> 🚦  Running task: false
-    [ ShellKit ]> ⛔️  Error - Task exited with status 1
+    [ ShellKit ]> ❌  Error - Task exited with status 1
     [ ShellKit ]> ✅  Task is marked as optional - Not failing
 
 ### Running task groups
@@ -196,7 +196,7 @@ task = [ SKTask taskWithShellScript: @"echo %{hello}% %{foo}% %{bar}%" ];
     [ ShellKit ]> 🚦  Running task: echo hello, world %{foo}% %{bar}%
     [ ShellKit ]> ⚠️  No value provided value for variable: foo
     [ ShellKit ]> ⚠️  No value provided value for variable: bar
-    [ ShellKit ]> ⛔️  Error - Script contains unsubstituted variables
+    [ ShellKit ]> ❌  Error - Script contains unsubstituted variables
 
 ### Printing messages
 
