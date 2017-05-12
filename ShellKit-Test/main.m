@@ -144,6 +144,16 @@ int main( void )
             assert( ( [ task run ] == YES ) );
         }
         
+        PrintStep( @"Optional task" );
+        
+        {
+            SKOptionalTask * task;
+            
+            task = [ SKOptionalTask taskWithShellScript: @"false" ];
+            
+            assert( ( [ task run ] == YES ) );
+        }
+        
         PrintStep( @"Task group" );
         
         {

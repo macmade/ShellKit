@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_END
                     
                     for( recover in self.recover )
                     {
-                        [ [ SKShell currentShell ] printWarningMessage: @"Task failed - Trying to recover..." ];
+                        [ [ SKShell currentShell ] printWarningMessage: @"Task failed - Trying to recover" ];
                         
                         ret          = [ recover run: variables ];
                         self.error   = recover.error;

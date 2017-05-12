@@ -29,6 +29,9 @@
 		054B00541EC4EA950032B500 /* SKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B00521EC4EA950032B500 /* SKTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		054B00561EC4ECA60032B500 /* libcurses.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C35D8A1EC3D0F500F373E7 /* libcurses.tbd */; };
 		058F79171EC5FA53007CFF3A /* ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 058F79161EC5FA53007CFF3A /* ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		058F79231EC610FE007CFF3A /* SKOptionalTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 058F79211EC610FE007CFF3A /* SKOptionalTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		058F79241EC610FE007CFF3A /* SKOptionalTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F79221EC610FE007CFF3A /* SKOptionalTask.m */; };
+		058F79251EC61144007CFF3A /* SKOptionalTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 058F79221EC610FE007CFF3A /* SKOptionalTask.m */; };
 		05CF703D1EC4FE2C00A39841 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 05CF703C1EC4FE2C00A39841 /* main.m */; };
 		05CF70451EC5003D00A39841 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05CF70441EC5003D00A39841 /* Foundation.framework */; };
 		05CF70461EC5004800A39841 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05CF70441EC5003D00A39841 /* Foundation.framework */; };
@@ -79,6 +82,8 @@
 		054BFFF11EC4E60B0032B500 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		054BFFFB1EC4E6670032B500 /* libShellKit-Static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libShellKit-Static.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		058F79161EC5FA53007CFF3A /* ShellKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellKit.h; sourceTree = "<group>"; };
+		058F79211EC610FE007CFF3A /* SKOptionalTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKOptionalTask.h; sourceTree = "<group>"; };
+		058F79221EC610FE007CFF3A /* SKOptionalTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKOptionalTask.m; sourceTree = "<group>"; };
 		05C35D8A1EC3D0F500F373E7 /* libcurses.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurses.tbd; path = usr/lib/libcurses.tbd; sourceTree = SDKROOT; };
 		05CF703A1EC4FE2C00A39841 /* ShellKit-Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "ShellKit-Test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CF703C1EC4FE2C00A39841 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -136,6 +141,8 @@
 				058F79161EC5FA53007CFF3A /* ShellKit.h */,
 				054B002D1EC4E8D20032B500 /* SKObject.h */,
 				054B002E1EC4E8D20032B500 /* SKObject.m */,
+				058F79211EC610FE007CFF3A /* SKOptionalTask.h */,
+				058F79221EC610FE007CFF3A /* SKOptionalTask.m */,
 				054B002F1EC4E8D20032B500 /* SKRunableObject.h */,
 				054B00301EC4E8D20032B500 /* SKShell.h */,
 				054B00311EC4E8D20032B500 /* SKShell.m */,
@@ -207,6 +214,7 @@
 				054B003A1EC4E8D20032B500 /* SKObject.h in Headers */,
 				054B003E1EC4E8D20032B500 /* SKRunableObject.h in Headers */,
 				054B004E1EC4EA050032B500 /* NSString+ShellKit.h in Headers */,
+				058F79231EC610FE007CFF3A /* SKOptionalTask.h in Headers */,
 				054B00541EC4EA950032B500 /* SKTypes.h in Headers */,
 				051DFF491EC55032009A4319 /* NSDate+ShellKit.h in Headers */,
 				058F79171EC5FA53007CFF3A /* ShellKit.h in Headers */,
@@ -336,6 +344,7 @@
 			files = (
 				054B00501EC4EA050032B500 /* NSString+ShellKit.m in Sources */,
 				054B00421EC4E8D20032B500 /* SKShell.m in Sources */,
+				058F79241EC610FE007CFF3A /* SKOptionalTask.m in Sources */,
 				054B004A1EC4E8D20032B500 /* SKTaskGroup.m in Sources */,
 				051DFF4A1EC55032009A4319 /* NSDate+ShellKit.m in Sources */,
 				054B003C1EC4E8D20032B500 /* SKObject.m in Sources */,
@@ -349,6 +358,7 @@
 			files = (
 				054B00511EC4EA050032B500 /* NSString+ShellKit.m in Sources */,
 				054B00431EC4E8D20032B500 /* SKShell.m in Sources */,
+				058F79251EC61144007CFF3A /* SKOptionalTask.m in Sources */,
 				054B004B1EC4E8D20032B500 /* SKTaskGroup.m in Sources */,
 				051DFF4B1EC55040009A4319 /* NSDate+ShellKit.m in Sources */,
 				054B003D1EC4E8D20032B500 /* SKObject.m in Sources */,

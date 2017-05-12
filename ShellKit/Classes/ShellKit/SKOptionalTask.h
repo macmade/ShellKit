@@ -23,16 +23,17 @@
  ******************************************************************************/
 
 /*!
- * @file        ShellKit.h
+ * @header      SKOptionalTask.h
  * @copyright   (c) 2017, Jean-David Gadina - www.xs-labs.com
  */
 
-#import <ShellKit/SKTypes.h>
-#import <ShellKit/NSString+ShellKit.h>
-#import <ShellKit/NSDate+ShellKit.h>
-#import <ShellKit/SKObject.h>
-#import <ShellKit/SKRunableObject.h>
-#import <ShellKit/SKShell.h>
+#import <Foundation/Foundation.h>
 #import <ShellKit/SKTask.h>
-#import <ShellKit/SKOptionalTask.h>
-#import <ShellKit/SKTaskGroup.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface SKOptionalTask: SKTask
+
+@end
+
+NS_ASSUME_NONNULL_END
