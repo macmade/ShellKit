@@ -1,9 +1,11 @@
 language: objective-c
+install:
+- gem install xcpretty
 script:
-- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit" build
-- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Static" build
-- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Test" build
-- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Test" install DSTROOT="/"
+- set -o pipefail && xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit" build | xcpretty
+- set -o pipefail && xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Static" build | xcpretty
+- set -o pipefail && xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Test" build | xcpretty
+- set -o pipefail && xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Test" install DSTROOT="/" | xcpretty
 - /usr/local/bin/ShellKit-Test
 notifications:
     slack: xs-labs:FXh1yLXNkpcVxKZhZU6icdhI
