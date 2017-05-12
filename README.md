@@ -16,6 +16,8 @@ About
 
 Objective-C framework for running shell scripts.
 
+![Terminal](Assets/Terminal.png "Terminal")
+
 Code Examples
 -------------
 
