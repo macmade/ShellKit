@@ -22,6 +22,33 @@ Code Examples
 `ShellKit` provides a test executable.  
 For complete examples, please take a look at the [source code](https://github.com/macmade/ShellKit/blob/master/ShellKit-Test/main.m).
 
+### Shell informations
+
+Various shell informations, like paths for commands, can be retrieved using the `SKShell` class:
+
+```objc
+[ [ SKShell currentShell ] commandIsAvailable: @"xcodebuild" ]
+
+NSString * path = [ [ SKShell currentShell ] pathForCommand: @"xcodebuild" ]
+```
+
+### Running simple commands
+
+Arbitrary shell commands can be run using the `SKShell` class.  
+Note that commands are executed using the shell defined in the `SHELL` environment variable, invoked as a login shell.  
+Data for `stdin` can be provided; `stdout` and `stderr` can be retrieved.
+
+```objc
+[ [ SKShell currentShell ] runCommand: @"ls -al"
+                           completion: ^( int status, NSString * output, NSString * error )
+    {
+        NSLog( @"%i", status );
+        NSLog( @"%@", output );
+        NSLog( @"%@", error );
+    }
+];
+```
+
 ### Running shell script tasks
 
 A shell command can by run by using the `SKTask` object:
@@ -36,7 +63,7 @@ task = [ SKTask taskWithShellScript: @"ls -al" ];
 
 The task is run synchronously, and its output, if any, will be automatically printed to `stdout`.
 
-The task will print the executed command prior to running, and print a status message once it's terminated:
+The task will print the executed command prior to running, and print a status message once it's terminated, along with the elapsed time:
 
     [ ShellKit ]> 🚦  Running task: ls -al
     total 536
@@ -45,7 +72,7 @@ The task will print the executed command prior to running, and print a status me
     -rwxr-xr-x  1 macmade  staff  124624 May 11 23:49 ShellKit-Test
     drwxr-xr-x  7 macmade  staff     238 May 11 23:48 ShellKit.framework
     -rw-r--r--  1 macmade  staff  143936 May 11 23:48 libShellKit-Static.a
-    [ ShellKit ]> ✅  Task completed successfully
+    [ ShellKit ]> ✅  Task completed successfully (63 ms)
     
 A task can have sub-tasks, to try to recover from a failure:
 
@@ -63,8 +90,8 @@ As `true` will succeed, the `false` task will also succeed:
     [ ShellKit ]> 🚦  Running task: false
     [ ShellKit ]> ⚠️  Task failed - Trying to recover...
     [ ShellKit ]> 🚦  Running task: true
-    [ ShellKit ]> ✅  Task completed successfully
-    [ ShellKit ]> ✅  Task recovered successfully
+    [ ShellKit ]> ✅  Task completed successfully (66 ms)
+    [ ShellKit ]> ✅  Task recovered successfully (66 ms)
 
 ### Running task groups
 
@@ -87,49 +114,34 @@ If a task fails, the whole group will also fail.
 
     [ ShellKit ]> [ task-group ]> 🚦  Running 2 tasks
     [ ShellKit ]> [ task-group ]> [ #1 ]> 🚦  Running task: true
-    [ ShellKit ]> [ task-group ]> [ #1 ]> ✅  Task completed successfully
+    [ ShellKit ]> [ task-group ]> [ #1 ]> ✅  Task completed successfully (64 ms)
     [ ShellKit ]> [ task-group ]> [ #2 ]> 🚦  Running task: true
-    [ ShellKit ]> [ task-group ]> [ #2 ]> ✅  Task completed successfully
-    [ ShellKit ]> [ task-group ]> ✅  2 tasks completed successfully
+    [ ShellKit ]> [ task-group ]> [ #2 ]> ✅  Task completed successfully (65 ms)
+    [ ShellKit ]> [ task-group ]> ✅  2 tasks completed successfully (132 ms)
 
-Running actions
----------------
+### Running task groups within task groups
 
-Actions, represented by the `SKAction` class, consist of a group of task groups (`SKTaskGroup`):
+A task group may also contain other task groups:
 
 ```objc
 SKTask      * t1;
 SKTask      * t2;
 SKTaskGroup * g1;
 SKTaskGroup * g2;
-SKAction    * action;
 
-t1     = [ SKTask taskWithShellScript: @"true" ];
-t2     = [ SKTask taskWithShellScript: @"true" ];
-g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
-g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t2 ] ];
-action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
-
-[ action run ];
+t1 = [ SKTask taskWithShellScript: @"true" ];
+t2 = [ SKTask taskWithShellScript: @"true" ];
+g1 = [ SKTaskGroup taskGroupWithName: @"child-group" tasks: @[ t1, t2 ] ];
+g2 = [ SKTaskGroup taskGroupWithName: @"parent-group" tasks: @[ g1 ] ];
+        
+[ g2 run ];
 ```
 
-The action will try to run each task group.  
-If a task group fails, the whole action will also fail.
+The hierarchy of groups will be reflected by the prompt, like:
 
-    [ ShellKit ]> [ action ]> 🚦  Running 2 task groups
-    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> 🚦  Running 2 tasks
-    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #1 ]> 🚦  Running task: true
-    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #1 ]> ✅  Task completed successfully
-    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #2 ]> 🚦  Running task: true
-    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> [ #2 ]> ✅  Task completed successfully
-    [ ShellKit ]> [ action ]> [ #1 ]> [ task-group-1 ]> ✅  2 tasks completed successfully
-    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> 🚦  Running 2 tasks
-    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #1 ]> 🚦  Running task: true
-    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #1 ]> ✅  Task completed successfully
-    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #2 ]> 🚦  Running task: true
-    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> [ #2 ]> ✅  Task completed successfully
-    [ ShellKit ]> [ action ]> [ #2 ]> [ task-group-2 ]> ✅  2 tasks completed successfully
-    [ ShellKit ]> [ action ]> ✅  2 task groups completed successfully
+    [ ShellKit ]> [ parent-group ]> [ #1 ]> [ child-group ]> [ #1 ]> 🚦  Running task: true
+
+**Note that task groups can also run custom classes, as long as they conform to the `SKRunableObject` protocol.**
 
 Variables substitution
 ----------------------
@@ -141,7 +153,7 @@ A variable has the following form:
 
 The variable name may contain letters from A to Z (uppercase or lowercase) and numbers from 0 to 9.
 
-Variables are passed using the `run:` method of `SKTask`, `SKTaskGroup` and `SKAction`.
+Variables are passed using the `run:` method of `SKTask` and `SKTaskGroup`.
 
 ```objc
 SKTask * task;
