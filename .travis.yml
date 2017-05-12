@@ -3,7 +3,7 @@ script:
 - xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit" build
 - xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Static" build
 - xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Test" build
-- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Test" install
+- xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit-Test" install DSTROOT="/"
 - /usr/local/bin/ShellKit-Test
 notifications:
     slack: xs-labs:FXh1yLXNkpcVxKZhZU6icdhI
