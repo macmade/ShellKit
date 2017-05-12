@@ -665,6 +665,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -677,6 +678,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};
@@ -717,6 +719,7 @@
 				05CF703F1EC4FE2C00A39841 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
