@@ -162,8 +162,7 @@ The hierarchy of groups will be reflected by the prompt, like:
 
 **Note that task groups can also run custom classes, as long as they conform to the `SKRunableObject` protocol.**
 
-Variables substitution
-----------------------
+### Variables substitution
 
 A task may contain variables, that will be substituted when running.  
 A variable has the following form:
@@ -199,8 +198,7 @@ task = [ SKTask taskWithShellScript: @"echo %{hello}% %{foo}% %{bar}%" ];
     [ ShellKit ]> ⚠️  No value provided value for variable: bar
     [ ShellKit ]> ⛔️  Error - Script contains unsubstituted variables
 
-Printing messages
------------------
+### Printing messages
 
 Messages can be printed very easily.  
 For this purpose, the `SKShell` class provides several methods, like the following one:
@@ -230,8 +228,7 @@ will produce:
 
     🚸 hello, world
 
-Customising prompt
-------------------
+### Customising prompt
 
 The prompt can be customised to reflect the hierarchy of the invoked commands.
 
