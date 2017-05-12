@@ -1,5 +1,6 @@
 language: objective-c
 install:
+- rvm get head
 - gem install xcpretty
 script:
 - set -o pipefail && xcodebuild -project "ShellKit.xcodeproj" -scheme "ShellKit" build | xcpretty
