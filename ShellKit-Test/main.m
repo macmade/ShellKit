@@ -40,9 +40,9 @@ void PrintStep( NSString * msg )
     prompt                          = [ SKShell currentShell ].promptParts;
     [ SKShell currentShell ].prompt = @"";
     
-    [ [ SKShell currentShell ] printMessage:           @"" ];
-    [ [ SKShell currentShell ] printMessageWithFormat: @"Example %lu: %@" status: SKStatusIdea, ( unsigned long )++step, msg ];
-    [ [ SKShell currentShell ] printMessage:           @"--------------------------------------------------------------------------------" ];
+    [ [ SKShell currentShell ] printMessage: @"" ];
+    [ [ SKShell currentShell ] printMessage: @"Example %lu: %@" status: SKStatusIdea, ( unsigned long )++step, msg ];
+    [ [ SKShell currentShell ] printMessage: @"--------------------------------------------------------------------------------" ];
     
     [ SKShell currentShell ].promptParts = prompt;
 }
@@ -66,9 +66,9 @@ int main( void )
             
             assert( shell != nil );
             
-            [ [ SKShell currentShell ] printMessageWithFormat: @"shell:      %@" status: SKStatusSettings, shell ];
-            [ [ SKShell currentShell ] printMessageWithFormat: @"brew:       %@" status: SKStatusSettings, ( brew       ) ? brew       : @"--" ];
-            [ [ SKShell currentShell ] printMessageWithFormat: @"xcodebuild: %@" status: SKStatusSettings, ( xcodebuild ) ? xcodebuild : @"--" ];
+            [ [ SKShell currentShell ] printMessage: @"shell:      %@" status: SKStatusSettings, shell ];
+            [ [ SKShell currentShell ] printMessage: @"brew:       %@" status: SKStatusSettings, ( brew       ) ? brew       : @"--" ];
+            [ [ SKShell currentShell ] printMessage: @"xcodebuild: %@" status: SKStatusSettings, ( xcodebuild ) ? xcodebuild : @"--" ];
         }
         
         PrintStep( @"Executing commands" );
@@ -77,18 +77,18 @@ int main( void )
             [ [ SKShell currentShell ] printMessage: @"Executing ls -al" status: SKStatusExecute color: SKColorCyan ];
             [ [ SKShell currentShell ] runCommand: @"ls -al" completion: ^( int status, NSString * output, NSString * error )
                 {
-                    [ [ SKShell currentShell ] printInfoMessageWithFormat: @"Command exited with status %i", status ];
+                    [ [ SKShell currentShell ] printInfoMessage: @"Command exited with status %i", status ];
                     
                     if( output.length )
                     {
                         [ [ SKShell currentShell ] printInfoMessage: @"Standard output:" ];
-                        [ [ SKShell currentShell ] printMessage: output ];
+                        [ [ SKShell currentShell ] printMessage: @"%@", output ];
                     }
                     
                     if( error.length )
                     {
                         [ [ SKShell currentShell ] printInfoMessage: @"Standard error:" ];
-                        [ [ SKShell currentShell ] printMessage: error ];
+                        [ [ SKShell currentShell ] printMessage: @"%@", error ];
                     }
                 }
             ];

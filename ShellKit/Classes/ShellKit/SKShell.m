@@ -303,19 +303,26 @@ NS_ASSUME_NONNULL_END
         message = @"An unknown error occured";
     }
     
-    [ self printMessage: message status: SKStatusError color: SKColorRed ];
+    [ self printMessage: @"%@" status: SKStatusError color: SKColorRed, message ];
 }
 
-- ( void )printErrorMessage: ( NSString * )message
+- ( void )printErrorMessage: ( NSString * )format, ...
 {
-    NSError * error;
+    NSError  * error;
+    NSString * message;
+    va_list    ap;
     
-    error = [ NSError errorWithDomain: NSPOSIXErrorDomain code: 0 userInfo: @{ NSLocalizedDescriptionKey : message } ];
+    va_start( ap, format );
+    
+    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+    error   = [ NSError errorWithDomain: NSPOSIXErrorDomain code: 0 userInfo: @{ NSLocalizedDescriptionKey : message } ];
+    
+    va_end( ap );
     
     [ self printError: error ];
 }
 
-- ( void )printErrorMessageWithFormat: ( NSString * )format, ...
+- ( void )printWarningMessage: ( NSString * )format, ...
 {
     NSString * message;
     va_list    ap;
@@ -326,15 +333,10 @@ NS_ASSUME_NONNULL_END
     
     va_end( ap );
     
-    [ self printErrorMessage: message ];
+    [ self printMessage: @"%@" status: SKStatusWarning color: SKColorYellow, message ];
 }
 
-- ( void )printWarningMessage: ( NSString * )message
-{
-    [ self printMessage: message status: SKStatusWarning color: SKColorYellow ];
-}
-
-- ( void )printWarningMessageWithFormat: ( NSString * )format, ...
+- ( void )printSuccessMessage: ( NSString * )format, ...
 {
     NSString * message;
     va_list    ap;
@@ -345,15 +347,10 @@ NS_ASSUME_NONNULL_END
     
     va_end( ap );
     
-    [ self printWarningMessage: message ];
+    [ self printMessage: @"%@" status: SKStatusSuccess color: SKColorGreen, message ];
 }
 
-- ( void )printSuccessMessage: ( NSString * )message
-{
-    [ self printMessage: message status: SKStatusSuccess color: SKColorGreen ];
-}
-
-- ( void )printSuccessMessageWithFormat: ( NSString * )format, ...
+- ( void )printInfoMessage: ( NSString * )format, ...
 {
     NSString * message;
     va_list    ap;
@@ -364,15 +361,10 @@ NS_ASSUME_NONNULL_END
     
     va_end( ap );
     
-    [ self printSuccessMessage: message ];
+    [ self printMessage: @"%@" status: SKStatusInfo color: SKColorBlue, message ];
 }
 
-- ( void )printInfoMessage: ( NSString * )message
-{
-    [ self printMessage: message status: SKStatusInfo color: SKColorBlue ];
-}
-
-- ( void )printInfoMessageWithFormat: ( NSString * )format, ...
+- ( void )printMessage: ( NSString * )format, ...
 {
     NSString * message;
     va_list    ap;
@@ -383,31 +375,52 @@ NS_ASSUME_NONNULL_END
     
     va_end( ap );
     
-    [ self printInfoMessage: message ];
+    [ self printMessage: @"%@" status: SKStatusNone color: SKColorNone, message ];
 }
 
-- ( void )printMessage: ( NSString * )message
+- ( void )printMessage: ( NSString * )format status: ( SKStatus )status, ...
 {
-    [ self printMessage: message status: SKStatusNone color: SKColorNone ];
+    NSString * message;
+    va_list    ap;
+    
+    va_start( ap, status );
+    
+    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+    
+    va_end( ap );
+    
+    [ self printMessage: @"%@" status: status color: SKColorNone, message ];
 }
 
-- ( void )printMessage: ( NSString * )message status: ( SKStatus )status
+- ( void )printMessage: ( NSString * )format color: ( SKColor )color, ...
 {
-    [ self printMessage: message status: status color: SKColorNone ];
+    NSString * message;
+    va_list    ap;
+    
+    va_start( ap, color );
+    
+    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+    
+    va_end( ap );
+    
+    [ self printMessage: @"%@" status: SKStatusNone color: color, message ];
 }
 
-- ( void )printMessage: ( NSString * )message color: ( SKColor )color
-{
-    [ self printMessage: message status: SKStatusNone color: color ];
-}
-
-- ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color
+- ( void )printMessage: ( NSString * )format status: ( SKStatus )status color: ( SKColor )color, ...
 {
     NSString * p;
     NSString * s;
+    NSString * message;
+    va_list    ap;
     
     @synchronized( self )
     {
+        va_start( ap, color );
+        
+        message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+        
+        va_end( ap );
+        
         p = ( self.prompt ) ? self.prompt : @"";
         s = [ NSString stringForShellStatus: status ];
         
@@ -425,62 +438,6 @@ NS_ASSUME_NONNULL_END
             [ message stringWithShellColor: color ].UTF8String
         );
     }
-}
-
-- ( void )printMessageWithFormat: ( NSString * )format, ...
-{
-    NSString * message;
-    va_list    ap;
-    
-    va_start( ap, format );
-    
-    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
-    
-    va_end( ap );
-    
-    [ self printMessage: message ];
-}
-
-- ( void )printMessageWithFormat: ( NSString * )format status: ( SKStatus )status, ...
-{
-    NSString * message;
-    va_list    ap;
-    
-    va_start( ap, status );
-    
-    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
-    
-    va_end( ap );
-    
-    [ self printMessage: message status: status ];
-}
-
-- ( void )printMessageWithFormat: ( NSString * )format color: ( SKColor )color, ...
-{
-    NSString * message;
-    va_list    ap;
-    
-    va_start( ap, color );
-    
-    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
-    
-    va_end( ap );
-    
-    [ self printMessage: message color: color ];
-}
-
-- ( void )printMessageWithFormat: ( NSString * )format status: ( SKStatus )status color: ( SKColor )color, ...
-{
-    NSString * message;
-    va_list    ap;
-    
-    va_start( ap, color );
-    
-    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
-    
-    va_end( ap );
-    
-    [ self printMessage: message status: status color: color ];
 }
 
 - ( NSArray< NSString * > * )promptParts

@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_END
         
         self.running = YES;
         
-        [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ script stringWithShellColor: SKColorCyan ] ];
+        [ [ SKShell currentShell ] printMessage: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ script stringWithShellColor: SKColorCyan ] ];
         
         regex   = [ NSRegularExpression regularExpressionWithPattern: @"%\\{([A-Za-z0-9]+)\\}%" options: NSRegularExpressionCaseInsensitive error: NULL ];
         matches = [ regex matchesInString: script options: ( NSMatchingOptions )0 range: NSMakeRange( 0, script.length ) ];
@@ -134,7 +134,7 @@ NS_ASSUME_NONNULL_END
         {
             for( match in matches )
             {
-                [ [ SKShell currentShell ] printWarningMessageWithFormat: @"No value provided value for variable: %@", [ script substringWithRange: [ match rangeAtIndex: 1 ] ] ];
+                [ [ SKShell currentShell ] printWarningMessage: @"No value provided value for variable: %@", [ script substringWithRange: [ match rangeAtIndex: 1 ] ] ];
             }
             
             self.error = [ self errorWithDescription: @"Script contains unsubstituted variables" ];
@@ -179,9 +179,16 @@ NS_ASSUME_NONNULL_END
                         {
                             time = date.elapsedTimeStringSinceNow;
                             
-                            [ [ SKShell currentShell ] printSuccessMessageWithFormat: @"Task recovered successfully%@",
-                                                       ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
-                            ];
+                            if( time )
+                            {
+                                time = [ [ NSString stringWithFormat: @"(%@)", time ] stringWithShellColor: SKColorNone ];
+                                
+                                [ [ SKShell currentShell ] printSuccessMessage: @"Task recovered successfully %@", time ];    
+                            }
+                            else
+                            {
+                                [ [ SKShell currentShell ] printSuccessMessage: @"Task recovered successfully" ];    
+                            }
                             
                             self.running = NO;
                             
@@ -206,9 +213,16 @@ NS_ASSUME_NONNULL_END
             return NO;
         }
         
-        [ [ SKShell currentShell ] printSuccessMessageWithFormat: @"Task completed successfully%@",
-                                   ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
-        ];
+        if( time )
+        {
+            time = [ [ NSString stringWithFormat: @"(%@)", time ] stringWithShellColor: SKColorNone ];
+            
+            [ [ SKShell currentShell ] printSuccessMessage: @"Task completed successfully %@", time ];
+        }
+        else
+        {
+            [ [ SKShell currentShell ] printSuccessMessage: @"Task completed successfully" ];
+        }    
         
         self.running = NO;
         

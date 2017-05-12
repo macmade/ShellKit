@@ -107,7 +107,7 @@ NS_ASSUME_NONNULL_END
         
         if( self.tasks.count > 1 )
         {
-            [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu tasks" status: SKStatusExecute color: SKColorNone, self.tasks.count ];
+            [ [ SKShell currentShell ] printMessage: @"Running %lu tasks" status: SKStatusExecute color: SKColorNone, self.tasks.count ];
         }
         
         i    = 0;
@@ -146,10 +146,16 @@ NS_ASSUME_NONNULL_END
         
         if( self.tasks.count > 1 )
         {
-            [ [ SKShell currentShell ] printSuccessMessageWithFormat: @"%lu tasks completed successfully%@",
-                                       self.tasks.count,
-                                       ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
-            ];
+            if( time )
+            {
+                time = [ [ NSString stringWithFormat: @"(%@)", time ] stringWithShellColor: SKColorNone ];
+
+                [ [ SKShell currentShell ] printSuccessMessage: @"%lu tasks completed successfully %@", self.tasks.count, time ];
+            }
+            else
+            {
+                [ [ SKShell currentShell ] printSuccessMessage: @"%lu tasks completed successfully", self.tasks.count ];
+            }
         }
         
         self.running = NO;

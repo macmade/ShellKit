@@ -56,24 +56,15 @@ typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOut
 - ( void )runCommandAsynchronously: ( NSString * )command stdandardInput: ( nullable NSString * )input completion: ( nullable SKShellCommandCompletion )completion;
 
 - ( void )printError: ( nullable NSError * )error;
-- ( void )printErrorMessage: ( NSString * )message;
-- ( void )printErrorMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
-- ( void )printWarningMessage: ( NSString * )message;
-- ( void )printWarningMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
-- ( void )printSuccessMessage: ( NSString * )message;
-- ( void )printSuccessMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
-- ( void )printInfoMessage: ( NSString * )message;
-- ( void )printInfoMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printErrorMessage: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printWarningMessage: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printSuccessMessage: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printInfoMessage: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
 
-- ( void )printMessage: ( NSString * )message;
-- ( void )printMessage: ( NSString * )message status: ( SKStatus )status;
-- ( void )printMessage: ( NSString * )message color: ( SKColor )color;
-- ( void )printMessage: ( NSString * )message status: ( SKStatus )status color: ( SKColor )color;
-
-- ( void )printMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
-- ( void )printMessageWithFormat: ( NSString * )format status: ( SKStatus )status, ... NS_FORMAT_FUNCTION( 1, 3 );
-- ( void )printMessageWithFormat: ( NSString * )format color: ( SKColor )color, ... NS_FORMAT_FUNCTION( 1, 3 );
-- ( void )printMessageWithFormat: ( NSString * )format status: ( SKStatus )status color: ( SKColor )color, ... NS_FORMAT_FUNCTION( 1, 4 );
+- ( void )printMessage: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printMessage: ( NSString * )format status: ( SKStatus )status, ... NS_FORMAT_FUNCTION( 1, 3 );
+- ( void )printMessage: ( NSString * )format color: ( SKColor )color, ... NS_FORMAT_FUNCTION( 1, 3 );
+- ( void )printMessage: ( NSString * )format status: ( SKStatus )status color: ( SKColor )color, ... NS_FORMAT_FUNCTION( 1, 4 );
 
 - ( void )addPromptPart:( NSString * )part;
 - ( void )removeLastPromptPart;
