@@ -30,22 +30,11 @@
 #import <Foundation/Foundation.h>
 #import <ShellKit/ShellKit.h>
 
-static NSUInteger step = 0;
+@interface TaskDelegate: NSObject < SKTaskDelegate >
+
+@end
 
 void PrintStep( NSString * msg );
-void PrintStep( NSString * msg )
-{
-    NSArray * prompt;
-    
-    prompt                          = [ SKShell currentShell ].promptParts;
-    [ SKShell currentShell ].prompt = @"";
-    
-    [ [ SKShell currentShell ] printMessage: @"" ];
-    [ [ SKShell currentShell ] printMessage: @"Example %lu: %@" status: SKStatusIdea, ( unsigned long )++step, msg ];
-    [ [ SKShell currentShell ] printMessage: @"--------------------------------------------------------------------------------" ];
-    
-    [ SKShell currentShell ].promptParts = prompt;
-}
 
 int main( void )
 {
@@ -274,6 +263,21 @@ int main( void )
             assert( ( [ task run: @{ @"hello" : @"hello, world" } ] == NO ) );
         }
         
+        PrintStep( @"Task delegate" );
+        
+        {
+            SKTask       * task;
+            TaskDelegate * delegate;
+            
+            task          = [ SKTask taskWithShellScript: @"ls -al" ];
+            delegate      = [ TaskDelegate new ];
+            task.delegate = delegate;
+            
+            assert( ( [ task run ] == YES ) );
+            
+            task.delegate = nil;
+        }
+        
         [ SKShell currentShell ].prompt = @"";
         
         [ [ SKShell currentShell ] printMessage: @"" ];
@@ -281,4 +285,50 @@ int main( void )
     }
     
     return EXIT_SUCCESS;
+}
+
+@implementation TaskDelegate
+
+- ( void )taskWillStart: ( SKTask * )task
+{
+    [ [ SKShell currentShell ] printMessage: @"Task will start: %@" status: SKStatusDebug, task ];
+}
+
+- ( void )task: ( SKTask * )task didEndWithStatus: ( int )status
+{
+    ( void )task;
+    
+    [ [ SKShell currentShell ] printMessage: @"Task ended with status: %i" status: SKStatusDebug, status ];
+}
+
+- ( void )task: ( SKTask * )task didProduceOutput: ( NSString * )output forType: ( SKTaskOutputType )type
+{
+    ( void )task;
+    
+    if( type == SKTaskOutputTypeStandardOutput )
+    {
+        fprintf( stdout, "%s", output.UTF8String );
+    }
+    else if( type == SKTaskOutputTypeStandardError )
+    {
+        fprintf( stderr, "%s", output.UTF8String );
+    }
+}
+
+@end
+
+static NSUInteger step = 0;
+
+void PrintStep( NSString * msg )
+{
+    NSArray * prompt;
+    
+    prompt                          = [ SKShell currentShell ].promptParts;
+    [ SKShell currentShell ].prompt = @"";
+    
+    [ [ SKShell currentShell ] printMessage: @"" ];
+    [ [ SKShell currentShell ] printMessage: @"Example %lu: %@" status: SKStatusIdea, ( unsigned long )++step, msg ];
+    [ [ SKShell currentShell ] printMessage: @"--------------------------------------------------------------------------------" ];
+    
+    [ SKShell currentShell ].promptParts = prompt;
 }

@@ -38,6 +38,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property( atomic, readwrite, strong           ) NSString            * script;
 @property( atomic, readwrite, strong, nullable ) NSArray< SKTask * > * recover;
 
+- ( void )dataAvailableForStandardOutput: ( NSNotification * )notification;
+- ( void )dataAvailableForStandardError:  ( NSNotification * )notification;
+
 @end
 
 NS_ASSUME_NONNULL_END
@@ -85,6 +88,11 @@ NS_ASSUME_NONNULL_END
     return self;
 }
 
+- ( void )dealloc
+{
+    [ [ NSNotificationCenter defaultCenter ] removeObserver: self ];
+}
+
 #pragma mark - SKRunableObject
 
 - ( BOOL )run
@@ -103,6 +111,9 @@ NS_ASSUME_NONNULL_END
     NSTextCheckingResult * match;
     NSDate               * date;
     NSString             * time;
+    id< SKTaskDelegate >   delegate;
+    NSPipe               * standardOutput;
+    NSPipe               * standardError;
     
     @synchronized( self )
     {
@@ -144,6 +155,7 @@ NS_ASSUME_NONNULL_END
             return NO;
         }
         
+        delegate        = self.delegate;
         task            = [ NSTask new ];
         task.launchPath = ( [ SKShell currentShell ].shell != nil ) ? [ SKShell currentShell ].shell : @"/bin/sh";
         task.arguments  =
@@ -153,12 +165,52 @@ NS_ASSUME_NONNULL_END
             script
         ];
         
+        if( [ delegate respondsToSelector: @selector( task:didProduceOutput:forType: ) ] )
+        {
+            standardOutput = [ NSPipe pipe ];
+            standardError  = [ NSPipe pipe ];
+            
+            task.standardOutput = standardOutput;
+            task.standardError  = standardError;
+            
+            [ [ NSNotificationCenter defaultCenter ] addObserver: self selector: @selector( dataAvailableForStandardOutput: ) name: NSFileHandleDataAvailableNotification object: standardOutput.fileHandleForReading ];
+            [ [ NSNotificationCenter defaultCenter ] addObserver: self selector: @selector( dataAvailableForStandardError:  ) name: NSFileHandleDataAvailableNotification object: standardError.fileHandleForReading ];
+            
+            [ standardOutput.fileHandleForReading waitForDataInBackgroundAndNotify ];
+            [ standardError.fileHandleForReading  waitForDataInBackgroundAndNotify ];
+        }
+        else
+        {
+            standardOutput = nil;
+            standardError  = nil;
+        }
+        
+        if( [ delegate respondsToSelector: @selector( taskWillStart: ) ] )
+        {
+            [ delegate taskWillStart: self ];
+        }
+        
         date = [ NSDate date ];
         
         [ task launch ];
         [ task waitUntilExit ];
         
         time = date.elapsedTimeStringSinceNow;
+        
+        if( [ delegate respondsToSelector: @selector( task:didEndWithStatus: ) ] )
+        {
+            [ delegate task: self didEndWithStatus: task.terminationStatus ];
+        }
+        
+        if( standardOutput )
+        {
+            [ [ NSNotificationCenter defaultCenter ] removeObserver: self name: NSFileHandleDataAvailableNotification object: standardOutput.fileHandleForReading ];
+        }
+        
+        if( standardError )
+        {
+            [ [ NSNotificationCenter defaultCenter ] removeObserver: self name: NSFileHandleDataAvailableNotification object: standardError.fileHandleForReading ];
+        }
         
         if( task.terminationStatus != 0 )
         {
@@ -227,6 +279,60 @@ NS_ASSUME_NONNULL_END
         self.running = NO;
         
         return YES;
+    }
+}
+
+- ( void )dataAvailableForStandardOutput: ( NSNotification * )notification
+{
+    NSFileHandle        * handle;
+    NSData              * data;
+    NSString            * output;
+    id < SKTaskDelegate > delegate;
+    
+    handle   = notification.object;
+    data     = handle.availableData;
+    output   = [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+    delegate = self.delegate;
+    
+    if( data.length )
+    {
+        if( [ delegate respondsToSelector: @selector( task:didProduceOutput:forType: ) ] )
+        {
+            [ delegate task: self didProduceOutput: output forType: SKTaskOutputTypeStandardOutput ];
+        }
+        else
+        {
+            fprintf( stdout, "%s", output.UTF8String );
+        }
+        
+        [ handle waitForDataInBackgroundAndNotify ];
+    }
+}
+
+- ( void )dataAvailableForStandardError:  ( NSNotification * )notification
+{
+    NSFileHandle        * handle;
+    NSData              * data;
+    NSString            * output;
+    id < SKTaskDelegate > delegate;
+    
+    handle   = notification.object;
+    data     = handle.availableData;
+    output   = [ [ NSString alloc ] initWithData: data encoding: NSUTF8StringEncoding ];
+    delegate = self.delegate;
+    
+    if( data.length )
+    {
+        if( [ delegate respondsToSelector: @selector( task:didProduceOutput:forType: ) ] )
+        {
+            [ delegate task: self didProduceOutput: output forType: SKTaskOutputTypeStandardError ];
+        }
+        else
+        {
+            fprintf( stderr, "%s", output.UTF8String );
+        }
+        
+        [ handle waitForDataInBackgroundAndNotify ];
     }
 }
 

@@ -33,7 +33,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class SKTask;
+
+typedef NS_ENUM( NSInteger, SKTaskOutputType )
+{
+    SKTaskOutputTypeStandardOutput,
+    SKTaskOutputTypeStandardError
+};
+
+@protocol SKTaskDelegate< NSObject >
+
+@optional
+
+- ( void )taskWillStart: ( SKTask * )task;
+- ( void )task: ( SKTask * )task didProduceOutput: ( NSString * )output forType: ( SKTaskOutputType )type;
+- ( void )task: ( SKTask * )task didEndWithStatus: ( int )status;
+
+@end
+
 @interface SKTask: SKObject < SKRunableObject >
+
+@property( atomic, readwrite, weak ) id< SKTaskDelegate > delegate;
 
 + ( instancetype )taskWithShellScript: ( NSString * )script;
 + ( instancetype )taskWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover;
