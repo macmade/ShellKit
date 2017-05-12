@@ -89,7 +89,18 @@ NS_ASSUME_NONNULL_END
 
 - ( BOOL )run
 {
-    NSTask * task;
+    return [ self run: nil ];
+}
+
+- ( BOOL )run: ( nullable NSDictionary< NSString *, NSString * > * )variables
+{
+    NSTask               * task;
+    NSString             * key;
+    NSString             * var;
+    NSString             * script;
+    NSRegularExpression  * regex;
+    NSArray              * matches;
+    NSTextCheckingResult * match;
     
     @synchronized( self )
     {
@@ -97,12 +108,39 @@ NS_ASSUME_NONNULL_END
         {
             self.error = [ self errorWithDescription: @"No script defined" ];
             
+            [ [ SKShell currentShell ] printError: self.error ];
+            
             return NO;
+        }
+        
+        script = self.script.copy;
+        
+        for( key in variables )
+        {
+            var    = [ NSString stringWithFormat: @"$(%@)", key ];
+            script = [ script stringByReplacingOccurrencesOfString: var withString: variables[ key ] ];
         }
         
         self.running = YES;
         
-        [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ self.script stringWithShellColor: SKColorCyan ] ];
+        [ [ SKShell currentShell ] printMessageWithFormat: @"Running task: %@" status: SKStatusExecute color: SKColorNone, [ script stringWithShellColor: SKColorCyan ] ];
+        
+        regex   = [ NSRegularExpression regularExpressionWithPattern: @"\\$\\(([A-Za-z0-9]+)\\)" options: NSRegularExpressionCaseInsensitive error: NULL ];
+        matches = [ regex matchesInString: script options: ( NSMatchingOptions )0 range: NSMakeRange( 0, script.length ) ];
+        
+        if( matches.count != 0 )
+        {
+            for( match in matches )
+            {
+                [ [ SKShell currentShell ] printWarningMessageWithFormat: @"No value provided value for variable %@", [ script substringWithRange: match.range ] ];
+            }
+            
+            self.error = [ self errorWithDescription: @"Script contains unsubstituted variables" ];
+            
+            [ [ SKShell currentShell ] printError: self.error ];
+            
+            return NO;
+        }
         
         task            = [ NSTask new ];
         task.launchPath = @"/bin/sh";
@@ -110,7 +148,7 @@ NS_ASSUME_NONNULL_END
         @[
             @"-l",
             @"-c",
-            self.script
+            script
         ];
         
         [ task launch ];
@@ -128,7 +166,7 @@ NS_ASSUME_NONNULL_END
                     {
                         [ [ SKShell currentShell ] printMessageWithFormat: @"Task failed - Trying to recover..." status: SKStatusWarning color: SKColorYellow ];
                         
-                        ret          = [ recover run ];
+                        ret          = [ recover run: variables ];
                         self.error   = recover.error;
                         
                         if( ret )

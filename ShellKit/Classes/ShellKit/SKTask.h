@@ -35,8 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKTask: SKObject < SKRunableObject >
 
-@property( atomic, readwrite, strong, nullable ) NSDictionary< NSString *, NSString * > * variables;
-
 + ( instancetype )taskWithShellScript: ( NSString * )script;
 + ( instancetype )taskWithShellScript: ( NSString * )script recoverTask: ( nullable SKTask * )recover;
 + ( instancetype )taskWithShellScript: ( NSString * )script recoverTasks: ( nullable NSArray< SKTask * > * )recover;

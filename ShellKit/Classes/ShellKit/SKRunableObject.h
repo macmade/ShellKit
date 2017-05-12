@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property( atomic, readonly, nullable ) NSError * error;
 
 - ( BOOL )run;
+- ( BOOL )run: ( nullable NSDictionary< NSString *, NSString * > * )variables;
 
 @end
 

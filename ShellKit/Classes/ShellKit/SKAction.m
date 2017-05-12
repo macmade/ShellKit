@@ -70,6 +70,11 @@ NS_ASSUME_NONNULL_END
 
 - ( BOOL )run
 {
+    return [ self run: nil ];
+}
+
+- ( BOOL )run: ( nullable NSDictionary< NSString *, NSString * > * )variables
+{
     SKTaskGroup * group;
     NSUInteger    i;
     
@@ -111,7 +116,7 @@ NS_ASSUME_NONNULL_END
             
             [ [ SKShell currentShell ] addPromptPart: [ NSString stringWithFormat: @"#%li", ( unsigned long )++i ] ];
             
-            if( [ group run ] == NO )
+            if( [ group run: variables ] == NO )
             {
                 [ [ SKShell currentShell ] removeLastPromptPart ];
                 
