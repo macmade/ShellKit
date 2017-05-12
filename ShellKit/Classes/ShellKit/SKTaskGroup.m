@@ -146,9 +146,7 @@ NS_ASSUME_NONNULL_END
         
         if( self.tasks.count > 1 )
         {
-            [ [ SKShell currentShell ] printMessageWithFormat: @"%lu tasks completed successfully%@"
-                                       status:                 SKStatusSuccess
-                                       color:                  SKColorGreen,
+            [ [ SKShell currentShell ] printSuccessMessageWithFormat: @"%lu tasks completed successfully%@",
                                        self.tasks.count,
                                        ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
             ];

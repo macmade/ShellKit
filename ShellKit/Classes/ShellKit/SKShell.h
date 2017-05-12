@@ -60,6 +60,10 @@ typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOut
 - ( void )printErrorMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
 - ( void )printWarningMessage: ( NSString * )message;
 - ( void )printWarningMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printSuccessMessage: ( NSString * )message;
+- ( void )printSuccessMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
+- ( void )printInfoMessage: ( NSString * )message;
+- ( void )printInfoMessageWithFormat: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
 
 - ( void )printMessage: ( NSString * )message;
 - ( void )printMessage: ( NSString * )message status: ( SKStatus )status;

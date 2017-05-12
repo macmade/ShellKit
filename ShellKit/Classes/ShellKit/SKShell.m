@@ -162,8 +162,6 @@ NS_ASSUME_NONNULL_END
         return nil;
     }
     
-    output = [ output stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceAndNewlineCharacterSet ] ];
-    
     if( output.length == 0 || [ [ NSFileManager defaultManager ] fileExistsAtPath: output ] == NO )
     {
         return nil;
@@ -255,6 +253,9 @@ NS_ASSUME_NONNULL_END
                 error = nil;
             }
             
+            output = [ output stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceAndNewlineCharacterSet ] ];
+            error  = [ error  stringByTrimmingCharactersInSet: [ NSCharacterSet whitespaceAndNewlineCharacterSet ] ];            
+            
             completion
             (
                 task.terminationStatus,
@@ -345,6 +346,44 @@ NS_ASSUME_NONNULL_END
     va_end( ap );
     
     [ self printWarningMessage: message ];
+}
+
+- ( void )printSuccessMessage: ( NSString * )message
+{
+    [ self printMessage: message status: SKStatusSuccess color: SKColorGreen ];
+}
+
+- ( void )printSuccessMessageWithFormat: ( NSString * )format, ...
+{
+    NSString * message;
+    va_list    ap;
+    
+    va_start( ap, format );
+    
+    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+    
+    va_end( ap );
+    
+    [ self printSuccessMessage: message ];
+}
+
+- ( void )printInfoMessage: ( NSString * )message
+{
+    [ self printMessage: message status: SKStatusInfo color: SKColorBlue ];
+}
+
+- ( void )printInfoMessageWithFormat: ( NSString * )format, ...
+{
+    NSString * message;
+    va_list    ap;
+    
+    va_start( ap, format );
+    
+    message = [ [ NSString alloc ] initWithFormat: format arguments: ap ];
+    
+    va_end( ap );
+    
+    [ self printInfoMessage: message ];
 }
 
 - ( void )printMessage: ( NSString * )message

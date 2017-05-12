@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_END
                     
                     for( recover in self.recover )
                     {
-                        [ [ SKShell currentShell ] printMessageWithFormat: @"Task failed - Trying to recover..." status: SKStatusWarning color: SKColorYellow ];
+                        [ [ SKShell currentShell ] printWarningMessage: @"Task failed - Trying to recover..." ];
                         
                         ret          = [ recover run: variables ];
                         self.error   = recover.error;
@@ -179,9 +179,7 @@ NS_ASSUME_NONNULL_END
                         {
                             time = date.elapsedTimeStringSinceNow;
                             
-                            [ [ SKShell currentShell ] printMessageWithFormat: @"Task recovered successfully%@"
-                                                       status:                 SKStatusSuccess
-                                                       color:                  SKColorGreen,
+                            [ [ SKShell currentShell ] printSuccessMessageWithFormat: @"Task recovered successfully%@",
                                                        ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
                             ];
                             
@@ -208,9 +206,7 @@ NS_ASSUME_NONNULL_END
             return NO;
         }
         
-        [ [ SKShell currentShell ] printMessageWithFormat: @"Task completed successfully%@"
-                                   status:                 SKStatusSuccess
-                                   color:                  SKColorGreen,
+        [ [ SKShell currentShell ] printSuccessMessageWithFormat: @"Task completed successfully%@",
                                    ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
         ];
         

@@ -71,6 +71,29 @@ int main( void )
             [ [ SKShell currentShell ] printMessageWithFormat: @"xcodebuild: %@" status: SKStatusSettings, ( xcodebuild ) ? xcodebuild : @"--" ];
         }
         
+        PrintStep( @"Executing commands" );
+        
+        {
+            [ [ SKShell currentShell ] printMessage: @"Executing ls -al" status: SKStatusExecute color: SKColorCyan ];
+            [ [ SKShell currentShell ] runCommand: @"ls -al" completion: ^( int status, NSString * output, NSString * error )
+                {
+                    [ [ SKShell currentShell ] printInfoMessageWithFormat: @"Command exited with status %i", status ];
+                    
+                    if( output.length )
+                    {
+                        [ [ SKShell currentShell ] printInfoMessage: @"Standard output:" ];
+                        [ [ SKShell currentShell ] printMessage: output ];
+                    }
+                    
+                    if( error.length )
+                    {
+                        [ [ SKShell currentShell ] printInfoMessage: @"Standard error:" ];
+                        [ [ SKShell currentShell ] printMessage: error ];
+                    }
+                }
+            ];
+        }
+        
         PrintStep( @"Simple task" );
         
         {
@@ -244,7 +267,7 @@ int main( void )
         [ SKShell currentShell ].prompt = @"";
         
         [ [ SKShell currentShell ] printMessage: @"" ];
-        [ [ SKShell currentShell ] printMessage: @"All examples completed successfully" status: SKStatusSuccess color: SKColorGreen ];
+        [ [ SKShell currentShell ] printSuccessMessage: @"All examples completed successfully" ];
     }
     
     return EXIT_SUCCESS;
