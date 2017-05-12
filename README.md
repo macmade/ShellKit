@@ -188,9 +188,10 @@ For this purpose, the `SKShell` class provides several methods, like the followi
 
 
 ```objc
-- ( void )printMessage: ( NSString * )message
+- ( void )printMessage: ( NSString * )format
           status:       ( SKStatus )status
-          color:        ( SKColor )color;
+          color:        ( SKColor )color,
+                        ...;
 ```
 
 The status represents an optional icon.  
@@ -199,9 +200,10 @@ Colors can also be used, if the terminal supports it.
 As an example:
 
 ```objc
-[ [ SKShell currentShell ] printMessage: @"hello, world"
+[ [ SKShell currentShell ] printMessage: @"hello, %@"
                            status:       SKStatusDebug
-                           color:        SKColorCyan
+                           color:        SKColorCyan,
+                                         @"world"
 ];
 ```
 
