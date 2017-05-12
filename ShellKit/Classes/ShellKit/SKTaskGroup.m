@@ -33,11 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SKTaskGroup()
 
-@property( atomic, readwrite, assign           ) BOOL                  running;
-@property( atomic, readwrite, strong, nullable ) NSError             * error;
-@property( atomic, readwrite, strong           ) NSString            * name;
-@property( atomic, readwrite, strong           ) NSArray< SKTask * > * tasks;
-@property( atomic, readwrite, strong, nullable ) SKTask              * currentTask;
+@property( atomic, readwrite, assign           ) BOOL                               running;
+@property( atomic, readwrite, strong, nullable ) NSError                          * error;
+@property( atomic, readwrite, strong           ) NSString                         * name;
+@property( atomic, readwrite, strong           ) NSArray< id< SKRunableObject > > * tasks;
+@property( atomic, readwrite, strong, nullable ) id< SKRunableObject >              currentTask;
 
 @end
 
@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_END
 
 @implementation SKTaskGroup
 
-+ ( instancetype )taskGroupWithName: ( NSString * )name tasks: ( NSArray< SKTask * > * )tasks
++ ( instancetype )taskGroupWithName: ( NSString * )name tasks: ( NSArray< id< SKRunableObject > > * )tasks
 {
     return [ [ self alloc ] initWithName: name tasks: tasks ];
 }
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_END
     return [ self initWithName: @"" tasks: @[] ];
 }
 
-- ( instancetype )initWithName: ( NSString * )name tasks: ( NSArray< SKTask * > * )tasks
+- ( instancetype )initWithName: ( NSString * )name tasks: ( NSArray< id< SKRunableObject > > * )tasks
 {
     if( ( self = [ super init ] ) )
     {
@@ -75,10 +75,10 @@ NS_ASSUME_NONNULL_END
 
 - ( BOOL )run: ( nullable NSDictionary< NSString *, NSString * > * )variables
 {
-    SKTask   * task;
-    NSDate   * date;
-    NSString * time;
-    NSUInteger i;
+    id< SKRunableObject > task;
+    NSDate              * date;
+    NSString            * time;
+    NSUInteger            i;
     
     @synchronized( self )
     {

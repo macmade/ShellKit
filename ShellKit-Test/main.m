@@ -163,25 +163,25 @@ int main( void )
             assert( ( [ group run ] == YES ) );
         }
         
-        PrintStep( @"Action" );
+        PrintStep( @"Task groups in task group" );
         
         {
             SKTask      * t1;
             SKTask      * t2;
             SKTaskGroup * g1;
             SKTaskGroup * g2;
-            SKAction    * action;
+            SKTaskGroup * group;
             
-            t1     = [ SKTask taskWithShellScript: @"true" ];
-            t2     = [ SKTask taskWithShellScript: @"true" ];
-            g1     = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
-            g2     = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t2 ] ];
-            action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+            t1    = [ SKTask taskWithShellScript: @"true" ];
+            t2    = [ SKTask taskWithShellScript: @"true" ];
+            g1    = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
+            g2    = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t2 ] ];
+            group = [ SKTaskGroup taskGroupWithName: @"group" tasks: @[ g1, g2 ] ];
             
-            assert( ( [ action run ] == YES ) );
+            assert( ( [ group run ] == YES ) );
         }
         
-        PrintStep( @"Action failure" );
+        PrintStep( @"Task groups in task group failure" );
         
         {
             SKTask      * t1;
@@ -189,19 +189,19 @@ int main( void )
             SKTask      * t3;
             SKTaskGroup * g1;
             SKTaskGroup * g2;
-            SKAction    * action;
+            SKTaskGroup * group;
             
-            t1     = [ SKTask taskWithShellScript: @"true" ];
-            t2     = [ SKTask taskWithShellScript: @"true" ];
-            t3     = [ SKTask taskWithShellScript: @"false" ];
-            g1     = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
-            g2     = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t3 ] ];
-            action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+            t1    = [ SKTask taskWithShellScript: @"true" ];
+            t2    = [ SKTask taskWithShellScript: @"true" ];
+            t3    = [ SKTask taskWithShellScript: @"false" ];
+            g1    = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
+            g2    = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t3 ] ];
+            group = [ SKTaskGroup taskGroupWithName: @"group" tasks: @[ g1, g2 ] ];
             
-            assert( ( [ action run ] == NO ) );
+            assert( ( [ group run ] == NO ) );
         }
         
-        PrintStep( @"Action failure with successful recovery" );
+        PrintStep( @"Task groups in task group with successful recovery" );
         
         {
             SKTask      * t1;
@@ -209,16 +209,16 @@ int main( void )
             SKTask      * t3;
             SKTaskGroup * g1;
             SKTaskGroup * g2;
-            SKAction    * action;
+            SKTaskGroup * group;
             
-            t1     = [ SKTask taskWithShellScript: @"true" ];
-            t2     = [ SKTask taskWithShellScript: @"true" ];
-            t3     = [ SKTask taskWithShellScript: @"false" recoverTask: t1 ];
-            g1     = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
-            g2     = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t3 ] ];
-            action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
+            t1    = [ SKTask taskWithShellScript: @"true" ];
+            t2    = [ SKTask taskWithShellScript: @"true" ];
+            t3    = [ SKTask taskWithShellScript: @"false" recoverTask: t1 ];
+            g1    = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
+            g2    = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t3 ] ];
+            group = [ SKTaskGroup taskGroupWithName: @"group" tasks: @[ g1, g2 ] ];
             
-            assert( ( [ action run ] == YES ) );
+            assert( ( [ group run ] == YES ) );
         }
         
         PrintStep( @"Task arguments" );

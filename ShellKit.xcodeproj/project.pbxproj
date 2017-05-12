@@ -10,9 +10,6 @@
 		051DFF491EC55032009A4319 /* NSDate+ShellKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 051DFF471EC55032009A4319 /* NSDate+ShellKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		051DFF4A1EC55032009A4319 /* NSDate+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 051DFF481EC55032009A4319 /* NSDate+ShellKit.m */; };
 		051DFF4B1EC55040009A4319 /* NSDate+ShellKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 051DFF481EC55032009A4319 /* NSDate+ShellKit.m */; };
-		054B00361EC4E8D20032B500 /* SKAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B002B1EC4E8D20032B500 /* SKAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		054B00381EC4E8D20032B500 /* SKAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002C1EC4E8D20032B500 /* SKAction.m */; };
-		054B00391EC4E8D20032B500 /* SKAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002C1EC4E8D20032B500 /* SKAction.m */; };
 		054B003A1EC4E8D20032B500 /* SKObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 054B002D1EC4E8D20032B500 /* SKObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		054B003C1EC4E8D20032B500 /* SKObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002E1EC4E8D20032B500 /* SKObject.m */; };
 		054B003D1EC4E8D20032B500 /* SKObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 054B002E1EC4E8D20032B500 /* SKObject.m */; };
@@ -66,8 +63,6 @@
 		05110D051C1F121C00EE6851 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		051DFF471EC55032009A4319 /* NSDate+ShellKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ShellKit.h"; sourceTree = "<group>"; };
 		051DFF481EC55032009A4319 /* NSDate+ShellKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+ShellKit.m"; sourceTree = "<group>"; };
-		054B002B1EC4E8D20032B500 /* SKAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKAction.h; sourceTree = "<group>"; };
-		054B002C1EC4E8D20032B500 /* SKAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKAction.m; sourceTree = "<group>"; };
 		054B002D1EC4E8D20032B500 /* SKObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKObject.h; sourceTree = "<group>"; };
 		054B002E1EC4E8D20032B500 /* SKObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKObject.m; sourceTree = "<group>"; };
 		054B002F1EC4E8D20032B500 /* SKRunableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKRunableObject.h; sourceTree = "<group>"; };
@@ -138,8 +133,6 @@
 				051DFF481EC55032009A4319 /* NSDate+ShellKit.m */,
 				054B004C1EC4EA050032B500 /* NSString+ShellKit.h */,
 				054B004D1EC4EA050032B500 /* NSString+ShellKit.m */,
-				054B002B1EC4E8D20032B500 /* SKAction.h */,
-				054B002C1EC4E8D20032B500 /* SKAction.m */,
 				054B002D1EC4E8D20032B500 /* SKObject.h */,
 				054B002E1EC4E8D20032B500 /* SKObject.m */,
 				054B002F1EC4E8D20032B500 /* SKRunableObject.h */,
@@ -217,7 +210,6 @@
 				054BFFF21EC4E60B0032B500 /* ShellKit.h in Headers */,
 				054B00541EC4EA950032B500 /* SKTypes.h in Headers */,
 				051DFF491EC55032009A4319 /* NSDate+ShellKit.h in Headers */,
-				054B00361EC4E8D20032B500 /* SKAction.h in Headers */,
 				054B00481EC4E8D20032B500 /* SKTaskGroup.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,7 +334,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054B00381EC4E8D20032B500 /* SKAction.m in Sources */,
 				054B00501EC4EA050032B500 /* NSString+ShellKit.m in Sources */,
 				054B00421EC4E8D20032B500 /* SKShell.m in Sources */,
 				054B004A1EC4E8D20032B500 /* SKTaskGroup.m in Sources */,
@@ -356,7 +347,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054B00391EC4E8D20032B500 /* SKAction.m in Sources */,
 				054B00511EC4EA050032B500 /* NSString+ShellKit.m in Sources */,
 				054B00431EC4E8D20032B500 /* SKShell.m in Sources */,
 				054B004B1EC4E8D20032B500 /* SKTaskGroup.m in Sources */,
