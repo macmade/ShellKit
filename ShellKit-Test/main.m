@@ -40,8 +40,8 @@ void PrintStep( NSString * msg )
     prompt                          = [ SKShell currentShell ].promptParts;
     [ SKShell currentShell ].prompt = @"";
     
-    [ [ SKShell currentShell ] printMessage:           @"--------------------------------------------------------------------------------" ];
-    [ [ SKShell currentShell ] printMessageWithFormat: @"Example %lu: %@" status: SKStatusIdea color: SKColorPurple, ( unsigned long )++step, msg ];
+    [ [ SKShell currentShell ] printMessage:           @"" ];
+    [ [ SKShell currentShell ] printMessageWithFormat: @"Example %lu: %@" status: SKStatusIdea, ( unsigned long )++step, msg ];
     [ [ SKShell currentShell ] printMessage:           @"--------------------------------------------------------------------------------" ];
     
     [ SKShell currentShell ].promptParts = prompt;
@@ -112,7 +112,7 @@ int main( void )
             
             t1    = [ SKTask taskWithShellScript: @"true" ];
             t2    = [ SKTask taskWithShellScript: @"true" ];
-            group = [ SKTaskGroup taskGroupWithName: @"task-group" tasks: @[ t1, t2 ] ];
+            group = [ SKTaskGroup taskGroupWithName: @"group" tasks: @[ t1, t2 ] ];
             
             assert( ( [ group run ] == YES ) );
         }
@@ -126,7 +126,7 @@ int main( void )
             
             t1    = [ SKTask taskWithShellScript: @"true" ];
             t2    = [ SKTask taskWithShellScript: @"false" ];
-            group = [ SKTaskGroup taskGroupWithName: @"task-group" tasks: @[ t1, t2 ] ];
+            group = [ SKTaskGroup taskGroupWithName: @"group" tasks: @[ t1, t2 ] ];
             
             assert( ( [ group run ] == NO ) );
         }
@@ -140,7 +140,7 @@ int main( void )
             
             t1    = [ SKTask taskWithShellScript: @"true" ];
             t2    = [ SKTask taskWithShellScript: @"false" recoverTask: t1 ];
-            group = [ SKTaskGroup taskGroupWithName: @"task-group" tasks: @[ t1, t2 ] ];
+            group = [ SKTaskGroup taskGroupWithName: @"group" tasks: @[ t1, t2 ] ];
             
             assert( ( [ group run ] == YES ) );
         }
@@ -156,8 +156,8 @@ int main( void )
             
             t1     = [ SKTask taskWithShellScript: @"true" ];
             t2     = [ SKTask taskWithShellScript: @"true" ];
-            g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
-            g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t2 ] ];
+            g1     = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
+            g2     = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t2 ] ];
             action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
             
             assert( ( [ action run ] == YES ) );
@@ -176,8 +176,8 @@ int main( void )
             t1     = [ SKTask taskWithShellScript: @"true" ];
             t2     = [ SKTask taskWithShellScript: @"true" ];
             t3     = [ SKTask taskWithShellScript: @"false" ];
-            g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
-            g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t3 ] ];
+            g1     = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
+            g2     = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t3 ] ];
             action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
             
             assert( ( [ action run ] == NO ) );
@@ -196,8 +196,8 @@ int main( void )
             t1     = [ SKTask taskWithShellScript: @"true" ];
             t2     = [ SKTask taskWithShellScript: @"true" ];
             t3     = [ SKTask taskWithShellScript: @"false" recoverTask: t1 ];
-            g1     = [ SKTaskGroup taskGroupWithName: @"task-group-1" tasks: @[ t1, t2 ] ];
-            g2     = [ SKTaskGroup taskGroupWithName: @"task-group-2" tasks: @[ t1, t3 ] ];
+            g1     = [ SKTaskGroup taskGroupWithName: @"foo" tasks: @[ t1, t2 ] ];
+            g2     = [ SKTaskGroup taskGroupWithName: @"bar" tasks: @[ t1, t3 ] ];
             action = [ SKAction actionWithName: @"action" taskGroups: @[ g1, g2 ] ];
             
             assert( ( [ action run ] == YES ) );
@@ -223,8 +223,9 @@ int main( void )
             assert( ( [ task run: @{ @"hello" : @"hello, world" } ] == NO ) );
         }
         
-        PrintStep( @"Done" );
+        [ SKShell currentShell ].prompt = @"";
         
+        [ [ SKShell currentShell ] printMessage: @"" ];
         [ [ SKShell currentShell ] printMessage: @"All examples completed successfully" status: SKStatusSuccess color: SKColorGreen ];
     }
     

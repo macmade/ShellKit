@@ -23,16 +23,18 @@
  ******************************************************************************/
 
 /*!
- * @file        ShellKit.h
+ * @header      NSDate+ShellKit.h
  * @copyright   (c) 2017, Jean-David Gadina - www.xs-labs.com
  */
 
-#import <ShellKit/SKTypes.h>
-#import <ShellKit/NSString+ShellKit.h>
-#import <ShellKit/NSDate+ShellKit.h>
-#import <ShellKit/SKObject.h>
-#import <ShellKit/SKRunableObject.h>
-#import <ShellKit/SKShell.h>
-#import <ShellKit/SKTask.h>
-#import <ShellKit/SKTaskGroup.h>
-#import <ShellKit/SKAction.h>
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSDate( ShellKit )
+
+@property( atomic, readonly, nullable ) NSString * elapsedTimeStringSinceNow;
+
+@end
+
+NS_ASSUME_NONNULL_END

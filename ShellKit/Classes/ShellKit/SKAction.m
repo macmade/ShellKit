@@ -76,6 +76,8 @@ NS_ASSUME_NONNULL_END
 - ( BOOL )run: ( nullable NSDictionary< NSString *, NSString * > * )variables
 {
     SKTaskGroup * group;
+    NSDate      * date;
+    NSString    * time;
     NSUInteger    i;
     
     @synchronized( self )
@@ -108,7 +110,8 @@ NS_ASSUME_NONNULL_END
             [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu task groups" status: SKStatusExecute color: SKColorNone, self.taskGroups.count ];
         }
         
-        i = 0;
+        i    = 0;
+        date = [ NSDate date ];
         
         for( group in self.taskGroups )
         {
@@ -138,11 +141,17 @@ NS_ASSUME_NONNULL_END
             [ [ SKShell currentShell ] removeLastPromptPart ];
         }
         
+        time                  = date.elapsedTimeStringSinceNow;
         self.currentTaskGroup = nil;
         
         if( self.taskGroups.count > 1 )
         {
-            [ [ SKShell currentShell ] printMessageWithFormat: @"%lu task groups completed successfully" status: SKStatusSuccess color: SKColorGreen, self.taskGroups.count ];
+            [ [ SKShell currentShell ] printMessageWithFormat: @"%lu task groups completed successfully%@"
+                                       status:                 SKStatusSuccess
+                                       color:                  SKColorGreen,
+                                       self.taskGroups.count,
+                                       ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
+            ];
         }
         
         self.running = NO;

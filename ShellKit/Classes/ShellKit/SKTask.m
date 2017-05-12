@@ -101,6 +101,8 @@ NS_ASSUME_NONNULL_END
     NSRegularExpression  * regex;
     NSArray              * matches;
     NSTextCheckingResult * match;
+    NSDate               * date;
+    NSString             * time;
     
     @synchronized( self )
     {
@@ -151,8 +153,12 @@ NS_ASSUME_NONNULL_END
             script
         ];
         
+        date = [ NSDate date ];
+        
         [ task launch ];
         [ task waitUntilExit ];
+        
+        time = date.elapsedTimeStringSinceNow;
         
         if( task.terminationStatus != 0 )
         {
@@ -171,7 +177,13 @@ NS_ASSUME_NONNULL_END
                         
                         if( ret )
                         {
-                            [ [ SKShell currentShell ] printMessage: @"Task recovered successfully" status: SKStatusSuccess color: SKColorGreen ];
+                            time = date.elapsedTimeStringSinceNow;
+                            
+                            [ [ SKShell currentShell ] printMessageWithFormat: @"Task recovered successfully%@"
+                                                       status:                 SKStatusSuccess
+                                                       color:                  SKColorGreen,
+                                                       ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
+                            ];
                             
                             self.running = NO;
                             
@@ -196,7 +208,11 @@ NS_ASSUME_NONNULL_END
             return NO;
         }
         
-        [ [ SKShell currentShell ] printMessage: @"Task completed successfully" status: SKStatusSuccess color: SKColorGreen ];
+        [ [ SKShell currentShell ] printMessageWithFormat: @"Task completed successfully%@"
+                                   status:                 SKStatusSuccess
+                                   color:                  SKColorGreen,
+                                   ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
+        ];
         
         self.running = NO;
         

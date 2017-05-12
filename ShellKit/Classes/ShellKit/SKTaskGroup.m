@@ -76,6 +76,8 @@ NS_ASSUME_NONNULL_END
 - ( BOOL )run: ( nullable NSDictionary< NSString *, NSString * > * )variables
 {
     SKTask   * task;
+    NSDate   * date;
+    NSString * time;
     NSUInteger i;
     
     @synchronized( self )
@@ -108,7 +110,8 @@ NS_ASSUME_NONNULL_END
             [ [ SKShell currentShell ] printMessageWithFormat: @"Running %lu tasks" status: SKStatusExecute color: SKColorNone, self.tasks.count ];
         }
         
-        i = 0;
+        i    = 0;
+        date = [ NSDate date ];
         
         for( task in self.tasks )
         {
@@ -138,11 +141,17 @@ NS_ASSUME_NONNULL_END
             [ [ SKShell currentShell ] removeLastPromptPart ];
         }
         
+        time             = date.elapsedTimeStringSinceNow;
         self.currentTask = nil;
         
         if( self.tasks.count > 1 )
         {
-            [ [ SKShell currentShell ] printMessageWithFormat: @"%lu tasks completed successfully" status: SKStatusSuccess color: SKColorGreen, self.tasks.count ];
+            [ [ SKShell currentShell ] printMessageWithFormat: @"%lu tasks completed successfully%@"
+                                       status:                 SKStatusSuccess
+                                       color:                  SKColorGreen,
+                                       self.tasks.count,
+                                       ( time ) ? [ [ NSString stringWithFormat: @" (%@)", time ] stringWithShellColor: SKColorWhite ] : @""
+            ];
         }
         
         self.running = NO;

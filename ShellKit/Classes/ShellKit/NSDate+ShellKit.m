@@ -23,16 +23,44 @@
  ******************************************************************************/
 
 /*!
- * @file        ShellKit.h
+ * @file        NSDate+ShellKit.m
  * @copyright   (c) 2017, Jean-David Gadina - www.xs-labs.com
  */
 
-#import <ShellKit/SKTypes.h>
-#import <ShellKit/NSString+ShellKit.h>
-#import <ShellKit/NSDate+ShellKit.h>
-#import <ShellKit/SKObject.h>
-#import <ShellKit/SKRunableObject.h>
-#import <ShellKit/SKShell.h>
-#import <ShellKit/SKTask.h>
-#import <ShellKit/SKTaskGroup.h>
-#import <ShellKit/SKAction.h>
+#import <ShellKit/ShellKit.h>
+
+@implementation NSDate( ShellKit )
+
+- ( nullable NSString * )elapsedTimeStringSinceNow;
+{
+    NSTimeInterval t;
+    NSString     * str;
+    
+    t = -[ self timeIntervalSinceNow ];
+    
+    if( t < 0 )
+    {
+        return nil;
+    }
+    
+    if( t < 1 )
+    {
+        str = [ NSString stringWithFormat: @"%lu ms", ( NSUInteger )( t * 1000 ) ];
+    }
+    else if( t < 60 )
+    {
+        str = [ NSString stringWithFormat: @"%.02f s", t ];
+    }
+    else if( t < 3600 )
+    {
+        str = [ NSString stringWithFormat: @"%.02f m", t / 60 ];
+    }
+    else
+    {
+        str = [ NSString stringWithFormat: @"%.02f h", t / 3600 ];
+    }
+    
+    return str;
+}
+
+@end
