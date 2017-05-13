@@ -46,7 +46,9 @@ typedef NS_ENUM( NSInteger, SKStatus )
     SKStatusSettings,
     SKStatusSecurity,
     SKStatusExecute,
-    SKStatusSearch
+    SKStatusSearch,
+    SKStatusTarget,
+    SKStatusComment
 };
 
 typedef NS_ENUM( NSInteger, SKColor )

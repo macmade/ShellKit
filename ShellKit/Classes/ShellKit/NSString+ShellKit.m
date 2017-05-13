@@ -59,6 +59,8 @@
         case SKStatusSecurity:  return @"🔑";
         case SKStatusExecute:   return @"🚦";
         case SKStatusSearch:    return @"🔍";
+        case SKStatusTarget:    return @"🎯";
+        case SKStatusComment:   return @"💬";
     }
     
     return @"";
