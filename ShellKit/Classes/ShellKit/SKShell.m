@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property( atomic, readwrite, assign           ) BOOL                    observingPrompt;
 @property( atomic, readwrite, assign           ) BOOL                    hasPromptParts;
+@property( atomic, readwrite, assign           ) BOOL                    supportsColor;
 @property( atomic, readwrite, strong           ) NSArray< NSString * > * promptStrings;
 @property( atomic, readwrite, strong           ) dispatch_queue_t        dispatchQueue;
 @property( atomic, readwrite, strong, nullable ) NSString              * shell;
@@ -68,12 +69,23 @@ NS_ASSUME_NONNULL_END
 
 - ( instancetype )init
 {
+    int err;
+    
     if( ( self = [ super init ] ) )
     {
         self.shell                = [ NSProcessInfo processInfo ].environment[ @"SHELL" ];
         self.promptStrings        = @[];
         self.allowPromptHierarchy = YES;
         self.dispatchQueue        = dispatch_queue_create( "com.xs-labs.ShellKit.SKShell", DISPATCH_QUEUE_CONCURRENT );
+        
+        if( setupterm( NULL, 1, &err ) == ERR )
+        {
+            self.supportsColor = NO;
+        }
+        else
+        {
+            self.supportsColor = YES;
+        }
         
         [ self observerPrompt: YES ];
     }
@@ -115,18 +127,6 @@ NS_ASSUME_NONNULL_END
     {
         [ super observeValueForKeyPath: keyPath ofObject: object change: change context: context ];
     }
-}
-
-- ( BOOL )supportsColor
-{
-    int err;
-    
-    if( setupterm( NULL, 1, &err ) == ERR )
-    {
-        return NO;
-    }
-    
-    return YES;
 }
 
 - ( nullable NSString * )pathForCommand: ( NSString * )command
