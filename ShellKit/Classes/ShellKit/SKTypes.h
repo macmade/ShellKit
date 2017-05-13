@@ -48,7 +48,20 @@ typedef NS_ENUM( NSInteger, SKStatus )
     SKStatusExecute,
     SKStatusSearch,
     SKStatusTarget,
-    SKStatusComment
+    SKStatusComment,
+    SKStatusFile,
+    SKStatusFolder,
+    SKStatusTrash,
+    SKStatusLink,
+    SKStatusMail,
+    SKStatusAttachement,
+    SKStatusEdit,
+    SKStatusPin,
+    SKStatusLock,
+    SKStatusRocket,
+    SKStatusFire,
+    SKStatusLightning,
+    SKStatusBug
 };
 
 typedef NS_ENUM( NSInteger, SKColor )

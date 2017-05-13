@@ -45,22 +45,35 @@
 {
     switch( status )
     {
-        case SKStatusNone:      return @"";
-        case SKStatusSuccess:   return @"✅";
-        case SKStatusFatal:     return @"💣";
-        case SKStatusError:     return @"❌";
-        case SKStatusWarning:   return @"⚠️";
-        case SKStatusInfo:      return @"ℹ️";
-        case SKStatusDebug:     return @"🚸";
-        case SKStatusBuild:     return @"🔧";
-        case SKStatusInstall:   return @"📦";
-        case SKStatusIdea:      return @"💡";
-        case SKStatusSettings:  return @"⚙️";
-        case SKStatusSecurity:  return @"🔑";
-        case SKStatusExecute:   return @"🚦";
-        case SKStatusSearch:    return @"🔍";
-        case SKStatusTarget:    return @"🎯";
-        case SKStatusComment:   return @"💬";
+        case SKStatusNone:          return @"";
+        case SKStatusSuccess:       return @"✅";
+        case SKStatusFatal:         return @"💣";
+        case SKStatusError:         return @"❌";
+        case SKStatusWarning:       return @"⚠️";
+        case SKStatusInfo:          return @"ℹ️";
+        case SKStatusDebug:         return @"🚸";
+        case SKStatusBuild:         return @"🔧";
+        case SKStatusInstall:       return @"📦";
+        case SKStatusIdea:          return @"💡";
+        case SKStatusSettings:      return @"⚙️";
+        case SKStatusSecurity:      return @"🔑";
+        case SKStatusExecute:       return @"🚦";
+        case SKStatusSearch:        return @"🔍";
+        case SKStatusTarget:        return @"🎯";
+        case SKStatusComment:       return @"💬";
+        case SKStatusFile:          return @"📄";
+        case SKStatusFolder:        return @"📁";
+        case SKStatusTrash:         return @"🗑";
+        case SKStatusLink:          return @"🔗";
+        case SKStatusMail:          return @"✉️";
+        case SKStatusAttachement:   return @"📎";
+        case SKStatusEdit:          return @"✏️";
+        case SKStatusPin:           return @"📌";
+        case SKStatusLock:          return @"🔒";
+        case SKStatusRocket:        return @"🚀";
+        case SKStatusFire:          return @"🔥";
+        case SKStatusLightning:     return @"⚡️";
+        case SKStatusBug:           return @"🐛";
     }
     
     return @"";
