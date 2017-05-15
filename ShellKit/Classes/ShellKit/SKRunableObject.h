@@ -31,14 +31,40 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ * @protocol    SKRunableObject
+ * @abstract    Protocol for runnable objects
+ * @discussion  Represents an object that can be run (like a task).
+ */
 @protocol SKRunableObject< NSObject >
 
 @required
 
-@property( atomic, readonly           ) BOOL      running;
+/*!
+ * @property    running
+ * @abstract    Set when the runnable object is currently running
+ */
+@property( atomic, readonly ) BOOL running;
+
+/*!
+ * @property    error
+ * @abstract    An optional error, possibly set after the task has run
+ */
 @property( atomic, readonly, nullable ) NSError * error;
 
+/*!
+ * @method      run
+ * @abstract    Runs the task (synchronously)
+ * @result      YES if the runnable object has run successfully, otherwise NO
+ */
 - ( BOOL )run;
+
+/*!
+ * @method      run
+ * @abstract    Runs the task with variables (synchronously)
+ * @param       variables   Optional variables
+ * @result      YES if the runnable object has run successfully, otherwise NO
+ */
 - ( BOOL )run: ( nullable NSDictionary< NSString *, NSString * > * )variables;
 
 @end

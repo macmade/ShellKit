@@ -31,50 +31,58 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ * @typedef     SKStatus
+ * @abstract    Defines status icons
+ */
 typedef NS_ENUM( NSInteger, SKStatus )
 {
-    SKStatusNone,
-    SKStatusSuccess,
-    SKStatusFatal,
-    SKStatusError,
-    SKStatusWarning,
-    SKStatusInfo,
-    SKStatusDebug,
-    SKStatusBuild,
-    SKStatusInstall,
-    SKStatusIdea,
-    SKStatusSettings,
-    SKStatusSecurity,
-    SKStatusExecute,
-    SKStatusSearch,
-    SKStatusTarget,
-    SKStatusComment,
-    SKStatusFile,
-    SKStatusFolder,
-    SKStatusTrash,
-    SKStatusLink,
-    SKStatusMail,
-    SKStatusAttachement,
-    SKStatusEdit,
-    SKStatusPin,
-    SKStatusLock,
-    SKStatusRocket,
-    SKStatusFire,
-    SKStatusLightning,
-    SKStatusBug
+    SKStatusNone,           /*! No status */
+    SKStatusSuccess,        /*! Sucess status icon */
+    SKStatusFatal,          /*! Fatal error status icon */
+    SKStatusError,          /*! Error status icon */
+    SKStatusWarning,        /*! Warning status icon */
+    SKStatusInfo,           /*! Info status icon */
+    SKStatusDebug,          /*! Debug status icon */
+    SKStatusBuild,          /*! Build status icon */
+    SKStatusInstall,        /*! Install status icon */
+    SKStatusIdea,           /*! Idea status icon */
+    SKStatusSettings,       /*! Settings status icon */
+    SKStatusSecurity,       /*! Security status icon */
+    SKStatusExecute,        /*! Executing status icon */
+    SKStatusSearch,         /*! Search status icon */
+    SKStatusTarget,         /*! Target status icon */
+    SKStatusComment,        /*! Comment status icon */
+    SKStatusFile,           /*! File status icon */
+    SKStatusFolder,         /*! Folder status icon */
+    SKStatusTrash,          /*! Trash status icon */
+    SKStatusLink,           /*! Link status icon */
+    SKStatusMail,           /*! Mail message status icon */
+    SKStatusAttachement,    /*! Message attachmnet status icon */
+    SKStatusEdit,           /*! Edit status icon */
+    SKStatusPin,            /*! Push pin status icon */
+    SKStatusLock,           /*! Lock status icon */
+    SKStatusRocket,         /*! Rocket status icon */
+    SKStatusFire,           /*! Fire status icon */
+    SKStatusLightning,      /*! Lightning status icon */
+    SKStatusBug             /*! Bug status icon */
 };
 
+/*!
+ * @typedef     SKColor
+ * @abstract    Shell color type
+ */
 typedef NS_ENUM( NSInteger, SKColor )
 {
-    SKColorNone,
-    SKColorBlack,
-    SKColorRed,
-    SKColorGreen,
-    SKColorYellow,
-    SKColorBlue,
-    SKColorPurple,
-    SKColorWhite,
-    SKColorCyan
+    SKColorNone,    /*! No color (clear) */
+    SKColorBlack,   /*! Black color */
+    SKColorRed,     /*! Red color */
+    SKColorGreen,   /*! Green color */
+    SKColorYellow,  /*! Yellow color */
+    SKColorBlue,    /*! Blue color */
+    SKColorPurple,  /*! Purple color */
+    SKColorWhite,   /*! White color */
+    SKColorCyan     /*! Cyan color */
 };
 
 NS_ASSUME_NONNULL_END

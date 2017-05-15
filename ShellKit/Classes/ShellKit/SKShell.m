@@ -283,6 +283,11 @@ NS_ASSUME_NONNULL_END
     [ self runCommandAsynchronously: command stdandardInput: input completion: NULL ];
 }
 
+- ( void )runCommandAsynchronously: ( NSString * )command completion: ( nullable SKShellCommandCompletion )completion
+{
+    [ self runCommandAsynchronously: command stdandardInput: nil completion: completion ];
+}
+
 - ( void )runCommandAsynchronously: ( NSString * )command stdandardInput: ( nullable NSString * )input completion: ( nullable void ( ^ )( int status, NSString * stdandardOutput, NSString * standardError ) )completion
 {
     dispatch_async

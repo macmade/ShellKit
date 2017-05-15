@@ -31,8 +31,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ * @class       SKObject
+ * @abstract    Base class for ShellKit objects
+ */
 @interface SKObject: NSObject
 
+/*!
+ * @method      errorWithDescription:
+ * @abstract    Returns an error object for the class with a custom description
+ * @discussion  The error object will be created with a domain containing the
+ *              class name, eg: `com.xs-labs.ShellKit.SommClass`.
+ *              The message will be set as the error's localized description.
+ * @param       format  The error message format
+ * @param       ...     Optional parameters for the format string
+ * @result      An error object
+ */
 - ( NSError * )errorWithDescription: ( NSString * )format, ... NS_FORMAT_FUNCTION( 1, 2 );
 
 @end

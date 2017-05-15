@@ -25,6 +25,7 @@
 /*!
  * @file        ShellKit.h
  * @copyright   (c) 2017, Jean-David Gadina - www.xs-labs.com
+ * @abstarct    ShellKit's umbrella header
  */
 
 #import <ShellKit/SKTypes.h>

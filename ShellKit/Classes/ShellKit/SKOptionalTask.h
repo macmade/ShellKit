@@ -32,6 +32,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ * @class       SKOptionalTask
+ * @abstract    Represents an optional shell task
+ * @discussion  Optional tasks will succeed regardless of the exit status
+ *              of their command.
+ *              If used in a task group, a faling optional task will not fail
+ *              the whole group.
+ */
 @interface SKOptionalTask: SKTask
 
 @end

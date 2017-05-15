@@ -31,8 +31,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ * @category    NSDate( ShellKit )
+ * @abstract    Additional NSDate methods for ShellKit
+ */
 @interface NSDate( ShellKit )
 
+/*!
+ * @property    elapsedTimeStringSinceNow
+ * @abstract    Gets a string representing the elapsed time since now
+ * @discussion  If less than a second, the elapsed time will be represented
+ *              in milliseconds (ms). If less that a minute, it will be
+ *              represented in seconds (s). If less than an hour, it will
+ *              be represented in minutes (m). Otherwise, it will be
+ *              represented in hours (h).
+ * @result      A string representing the elasped time
+ */
 @property( atomic, readonly, nullable ) NSString * elapsedTimeStringSinceNow;
 
 @end

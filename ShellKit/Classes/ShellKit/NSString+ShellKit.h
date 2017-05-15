@@ -30,12 +30,45 @@
 #import <Foundation/Foundation.h>
 #import <ShellKit/SKTypes.h>
 
+/*!
+ * @category    NSString( ShellKit )
+ * @abstract    Additional NSString methods for ShellKit
+ */
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString( ShellKit )
 
+/*!
+ * @method      stringForShellStatus:
+ * @abstract    Returns an emoji string for a status
+ * @discussion  Status icons can be disabled with the `statusIconsEnabled` of
+ *              `SKShell`.
+ * @result      A string representing the status
+ * @see         SKStatus
+ * @see         SKShell#statusIconsEnabled
+ */
 + ( NSString * )stringForShellStatus: ( SKStatus )status;
+
+/*!
+ * @method      stringForShellColor:
+ * @abstract    Returns the string used to represent a shell color
+ * @discussion  Colors can be disabled with the `colorsEnabled` property of
+ *              `SKShell`.
+ * @result      A string representing the shell color
+ * @see         SKColor
+ * @see         SKShell#colorsEnabled
+ */
 + ( NSString * )stringForShellColor: ( SKColor )color;
+
+/*!
+ * @method      stringWithShellColor:
+ * @abstract    Returns a string with a shell color.
+ * @discussion  Colors can be disabled with the `colorsEnabled` property of
+ *              `SKShell`.
+ * @result      The colorized version of the string
+ * @see         SKColor
+ * @see         SKShell#colorsEnabled
+ */
 - ( NSString * )stringWithShellColor: ( SKColor )color;
 
 @end

@@ -33,13 +33,53 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*!
+ * @class       SKTaskGroup
+ * @abstract    Represents a group of tasks that may be run
+ * @see         SKRunableObject
+ */
 @interface SKTaskGroup: SKObject < SKRunableObject >
 
-@property( atomic, readonly                    ) NSString                         * name;
-@property( atomic, readonly                    ) NSArray< id< SKRunableObject > > * tasks;
-@property( atomic, readonly, nullable          ) id< SKRunableObject >              currentTask;
+/*!
+ * @property    name
+ * @abstract    The name of the task group
+ */
+@property( atomic, readonly ) NSString * name;
 
+/*!
+ * @property    tasks
+ * @abstract    The tasks contained in the task group
+ * @see         SKRunableObject
+ */
+@property( atomic, readonly ) NSArray< id< SKRunableObject > > * tasks;
+
+/*!
+ * @property    currentTask
+ * @abstract    The task currently executing
+ * @discussion  This property will be nil if the task group isn't running,
+ *              or if no task is actually executing.
+ * @see         SKRunableObject
+ */
+@property( atomic, readonly, nullable ) id< SKRunableObject > currentTask;
+
+/*!
+ * @method      taskGroupWithName:tasks:
+ * @abstract    Creates a task group object
+ * @param       name    The name of the task group
+ * @param       tasks   The tasks to execute when the task group is run
+ * @result      The task group object
+ * @see         SKRunableObject
+ */
 + ( instancetype )taskGroupWithName: ( NSString * )name tasks: ( NSArray< id< SKRunableObject > > * )tasks;
+
+/*!
+ * @method      initWithName:tasks:
+ * @abstract    Creates a task group object
+ * @param       name    The name of the task group
+ * @param       tasks   The tasks to execute when the task group is run
+ * @result      The task group object
+ * @see         SKRunableObject
+ */
 - ( instancetype )initWithName: ( NSString * )name tasks: ( NSArray< id< SKRunableObject > > * )tasks NS_DESIGNATED_INITIALIZER;
 
 @end
