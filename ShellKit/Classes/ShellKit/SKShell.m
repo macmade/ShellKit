@@ -38,8 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property( atomic, readwrite, assign           ) BOOL                    observingPrompt;
 @property( atomic, readwrite, assign           ) BOOL                    hasPromptParts;
 @property( atomic, readwrite, assign           ) BOOL                    supportsColors;
-@property( atomic, readwrite, assign           ) BOOL                    colorsEnabled;
-@property( atomic, readwrite, assign           ) BOOL                    statusIconsEnabled;
 @property( atomic, readwrite, strong           ) NSArray< NSString * > * promptStrings;
 @property( atomic, readwrite, strong           ) dispatch_queue_t        dispatchQueue;
 @property( atomic, readwrite, strong, nullable ) NSString              * shell;

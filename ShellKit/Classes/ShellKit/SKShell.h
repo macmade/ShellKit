@@ -61,7 +61,7 @@ typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOut
  * @see         supportsColors
  * @see         SKColor
  */
-@property( atomic, readonly ) BOOL colorsEnabled;
+@property( atomic, readwrite, assign ) BOOL colorsEnabled;
 
 /*!
  * @property    statusIconsEnabled
@@ -70,7 +70,7 @@ typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOut
  *              emojis.
  * @see         SKSTatus
  */
-@property( atomic, readonly ) BOOL statusIconsEnabled;
+@property( atomic, readwrite, assign ) BOOL statusIconsEnabled;
 
 /*!
  * @property    prompt
