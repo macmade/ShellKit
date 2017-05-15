@@ -52,6 +52,7 @@ ifeq ($(_HAS_XSDOCGEN),true)
 	@    --project-timezone "Europe/Zurich" \
 	@    --company-name "XS-Labs" \
 	@    --company-url "http://www.xs-labs.com/" \
+    @    --page-home "Pages/Home.inc.php" \
 	@    --source-root-prefix "/ShellKit/" \
 	@    --google-analytics "UA-51035898-4" "xs-labs.com" \
 	@    --google-analytics-display-features
