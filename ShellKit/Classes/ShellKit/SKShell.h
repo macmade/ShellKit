@@ -36,7 +36,9 @@ typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOut
 
 @interface SKShell: NSObject
 
-@property( atomic, readonly                    ) BOOL                    supportsColor;
+@property( atomic, readonly                    ) BOOL                    supportsColors;
+@property( atomic, readonly                    ) BOOL                    colorsEnabled;
+@property( atomic, readonly                    ) BOOL                    statusIconsEnabled;
 @property( atomic, readwrite, strong, nullable ) NSString              * prompt;
 @property( atomic, readwrite, strong, nullable ) NSArray< NSString * > * promptParts;
 @property( atomic, readwrite, assign           ) BOOL                    allowPromptHierarchy;
@@ -45,7 +47,7 @@ typedef void ( ^ SKShellCommandCompletion )( int status, NSString * stdandardOut
 + ( instancetype )currentShell;
 
 - ( nullable NSString * )pathForCommand: ( NSString * )command;
-- ( BOOL )isCommandAvailable: ( NSString * )command;
+- ( BOOL )commandIsAvailable: ( NSString * )command;
 
 - ( BOOL )runCommand: ( NSString * )command;
 - ( BOOL )runCommand: ( NSString * )command stdandardInput: ( nullable NSString * )input;

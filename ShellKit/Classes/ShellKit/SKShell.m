@@ -37,7 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property( atomic, readwrite, assign           ) BOOL                    observingPrompt;
 @property( atomic, readwrite, assign           ) BOOL                    hasPromptParts;
-@property( atomic, readwrite, assign           ) BOOL                    supportsColor;
+@property( atomic, readwrite, assign           ) BOOL                    supportsColors;
+@property( atomic, readwrite, assign           ) BOOL                    colorsEnabled;
+@property( atomic, readwrite, assign           ) BOOL                    statusIconsEnabled;
 @property( atomic, readwrite, strong           ) NSArray< NSString * > * promptStrings;
 @property( atomic, readwrite, strong           ) dispatch_queue_t        dispatchQueue;
 @property( atomic, readwrite, strong, nullable ) NSString              * shell;
@@ -80,12 +82,15 @@ NS_ASSUME_NONNULL_END
         
         if( setupterm( NULL, 1, &err ) == ERR )
         {
-            self.supportsColor = NO;
+            self.supportsColors = NO;
         }
         else
         {
-            self.supportsColor = YES;
+            self.supportsColors = YES;
         }
+        
+        self.colorsEnabled      = YES;
+        self.statusIconsEnabled = YES;
         
         [ self observerPrompt: YES ];
     }
@@ -170,7 +175,7 @@ NS_ASSUME_NONNULL_END
     return output;
 }
 
-- ( BOOL )isCommandAvailable: ( NSString * )command
+- ( BOOL )commandIsAvailable: ( NSString * )command
 {
     return [ self pathForCommand: command ] != nil;
 }

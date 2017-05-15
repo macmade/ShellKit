@@ -43,6 +43,11 @@
 
 + ( NSString * )stringForShellStatus: ( SKStatus )status
 {
+    if( [ SKShell currentShell ].statusIconsEnabled == NO )
+    {
+        return @"";
+    }
+    
     switch( status )
     {
         case SKStatusNone:          return @"";
@@ -81,7 +86,11 @@
 
 + ( NSString * )stringForShellColor: ( SKColor )color
 {
-    if( [ SKShell currentShell ].supportsColor == NO )
+    if
+    (
+           [ SKShell currentShell ].supportsColors == NO
+        || [ SKShell currentShell ].colorsEnabled  == NO
+    )
     {
         return @"";
     }
@@ -109,7 +118,7 @@
         return @"";
     }
     
-    if( [ SKShell currentShell ].supportsColor == NO )
+    if( [ SKShell currentShell ].supportsColors == NO )
     {
         return [ self copy ];
     }
