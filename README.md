@@ -18,6 +18,11 @@ Objective-C framework for running shell scripts.
 
 ![Terminal](Assets/Terminal.png "Terminal")
 
+Documentation
+-------------
+
+Documentation and API reference can be found at: http://doc.xs-labs.com/ShellKit/
+
 Code Examples
 -------------
 

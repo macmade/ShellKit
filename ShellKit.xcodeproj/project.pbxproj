@@ -81,6 +81,7 @@
 		054BFFEE1EC4E60B0032B500 /* ShellKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ShellKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		054BFFF11EC4E60B0032B500 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		054BFFFB1EC4E6670032B500 /* libShellKit-Static.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libShellKit-Static.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		05600C841ECA2D100085BDD1 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		058F79161EC5FA53007CFF3A /* ShellKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellKit.h; sourceTree = "<group>"; };
 		058F79211EC610FE007CFF3A /* SKOptionalTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKOptionalTask.h; sourceTree = "<group>"; };
 		058F79221EC610FE007CFF3A /* SKOptionalTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKOptionalTask.m; sourceTree = "<group>"; };
@@ -172,6 +173,14 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		05600C811ECA2D100085BDD1 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				05600C841ECA2D100085BDD1 /* Makefile */,
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
 		05BD89491A13FF4700A43CD8 = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +188,7 @@
 				05110D051C1F121C00EE6851 /* README.md */,
 				054BFFEF1EC4E60B0032B500 /* ShellKit */,
 				05CF703B1EC4FE2C00A39841 /* ShellKit-Test */,
+				05600C811ECA2D100085BDD1 /* Documentation */,
 				05BD89531A13FF4700A43CD8 /* Products */,
 				050B83E21EB919CB0090EA12 /* Frameworks */,
 			);
